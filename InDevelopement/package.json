@@ -4,7 +4,9 @@
   "description": "Developing code for the final project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "author": "Group 14",
   "license": "ISC",

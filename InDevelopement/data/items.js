@@ -63,8 +63,8 @@ async function createItem(itemName,itemDescription, status, userId, itemPrice,co
     const itemsCollection = await items();
     let postDate = new Date().toUTCString();
     let obj = {
-        itemName = itemName,
-        itemDescription = itemDescription,
+        itemName: itemName,
+        itemDescription: itemDescription,
         status: status,
         userId: userId,
         itemPrice: itemPrice,
@@ -72,7 +72,6 @@ async function createItem(itemName,itemDescription, status, userId, itemPrice,co
         photos: photos,
         postDate : postDate
     }
-    obj["_id"] = obj["_id"].toString();
     const insertInfo = await itemsCollection.insertOne(obj);
     if (insertInfo.insertedCount === 0)
     {
@@ -113,6 +112,7 @@ async function boughtItem(itemId)
     {
         throw "Error: was not given the right ID for the item list"
     }
+    let parseId;
     try{
         parseId = ObjectId(itemId);
     }
@@ -130,31 +130,31 @@ async function boughtItem(itemId)
     }
     const itemsCollection = await items();
     let obj = {
-        itemName = item[itemName],
-        itemDescription = item[itemDescription],
+        itemName: item["itemName"],
+        itemDescription: item["itemDescription"],
         status: "Sold",
-        userId: item[userId],
-        itemPrice: item[itemPrice],
-        commentIds: item[commentId],
-        photos: item[photos],
-        postDate : item[postDate]
+        userId: item["userId"],
+        itemPrice: item["itemPrice"],
+        commentIds: item["commentIds"],
+        photos: item["photos"],
+        postDate : item["postDate"]
     }
     const updatedInfo = await itemsCollection.updateOne({_id:parseId},{$set:obj});
     if(updatedInfo.modifiedCount ==0)
     {
         throw "Error: Could not update anything."
     }
-    return await get(id);
+    return obj;
 
       
 }
 //Returns a list of items that have the status open
 async function getItemList()
 {
-    const itemCollection = await item();
+    const itemCollection = await items();
     let itemList = [];
-    //const itemList = await itemCollection.find({}).toArray();
-    for(const i of itemCollection )
+    const itemTotalList = await itemCollection.find({}).toArray();
+    for(const i of itemTotalList)
     {
         if(i["status"]=="Open")
         {
@@ -188,8 +188,44 @@ async function addCommentToItem(commentId,itemId)
     {
         throw "Error: only gave a empty string for the comment ID."
     }
+    let item;
+    try{
+        item =await findItem(itemId);
+    }
+    catch(e)
+    {
+        throw "Error: Could not find the item in the list while adding a comment into the item."
+    }
+    let parseId;
+    try{
+        parseId = ObjectId(itemId);
+    }
+    catch(e)
+    {
+        "Error: item id could not be converted into object id."
+    }
+    let commentArray = item["commentIds"];
+    commentArray.push(commentId);
+    const itemsCollection = await items();
+    let obj = {
+        itemName: item["itemName"],
+        itemDescription: item["itemDescription"],
+        status: item["status"],
+        userId: item["userId"],
+        itemPrice: item["itemPrice"],
+        commentIds: commentArray,
+        photos: item["photos"],
+        postDate : item["postDate"]
+    }
+    const updatedInfo = await itemsCollection.updateOne({_id:parseId},{$set:obj});
+    if(updatedInfo.modifiedCount ==0)
+    {
+        throw "Error: Could not update anything."
+    }
+    return obj;
     
 }
+
 module.exports={
     createItem,
     findItem,
