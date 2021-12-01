@@ -3,9 +3,9 @@ const mongoCollections = require("../config/mongoCollections");
 const comments = mongoCollections.comments;
 
 // Note: 
-// Pass only userID which user has inserted comment
-// And content of Comment
-// Comment ID & Comment date will generate by createComment
+// Pass only user ID which user has inserted comment
+// And content of Comment which needs to pass
+// Comment ID & Comment date will generate by function createComment
 async function createComment(userId, Content) {
     if (typeof userId !== 'string')
         throw 'UserId should be string';
