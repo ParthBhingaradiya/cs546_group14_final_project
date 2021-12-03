@@ -1,6 +1,7 @@
 const { MongoClient, ObjectID, ReadPreferenceMode } = require('mongodb');
 const mongoCollections = require("../config/mongoCollections");
 const comments = mongoCollections.comments;
+const itemData = require("./items.js");
 
 // Note: 
 // Pass only user ID which user has inserted comment
@@ -26,8 +27,31 @@ async function createComment(userId, Content) {
     if (insertInfo.insertedCount === 0) {
         throw "Error: Comment not inserted"
     }
+    //////Calls user to add the comment id to the user database
     return obj;
 }
+async function getComment(commentsId)
+{
+    if(typeof commentsId !=='string')
+    {
+        throw "Error: Comment Id should be string"
+    }
+    const commentCollection = await comments();
+    try{
+        parseId = ObjectId(commentsId);
+    }
+    catch(e)
+    {
+        throw "Error: Confirmation if the id was valid error."
+    }
+    const findInfo = await commentCollection.findOne({_id:parseId})
+    if(findInfo===null)
+    {
+        throw "Error: Can't find the item."
+    }
+    return findInfo;
+}
 module.exports = {
-    createComment
+    createComment,
+    getComment
 };
