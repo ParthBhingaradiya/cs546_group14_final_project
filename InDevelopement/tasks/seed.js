@@ -1,7 +1,7 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const items = data.items;
-const users= data.user;
+const users= data.users;
 
 async function main() 
 {
