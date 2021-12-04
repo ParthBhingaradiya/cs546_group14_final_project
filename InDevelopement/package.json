@@ -11,11 +11,16 @@
   "author": "Group 14",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "blueimp-md5": "^2.19.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
     "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
-    "mongodb": "^4.2.0",
+    "mongodb": "^4.2.1",
+    "nedb-session-store": "^1.1.2",
     "uuid": "^8.3.2"
   }
 }
