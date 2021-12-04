@@ -95,7 +95,7 @@ async function checkUser(email, accountPassword) {
 
     const userCollection = await user();
     const found = await userCollection.findOne({email: email.toLowerCase()});
-    console.log(found);
+    // console.log(found);
     if (!found)
         throw("Either the username or password is invalid");
     else {
