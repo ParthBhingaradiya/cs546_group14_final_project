@@ -11,6 +11,26 @@ Remember:
 */
 async function createItem(itemName,itemDescription, status, userId, itemPrice,commentId,photos)
 {
+    itemName = itemName.trim();
+    itemDescription = itemName.trim();
+    status = status.trim();
+    userId = userId.trim();
+    if(itemName.length<=0)
+    {
+        throw "Error: item name is empty stirng."
+    }
+    if(itemDescription.length<=0)
+    {
+        throw "Error: item description is empty stirng."
+    }
+    if(status.length<=0)
+    {
+        throw "Error: item status is empty stirng."
+    }
+    if(userId.length<=0)
+    {
+        throw "Error: item's userId is empty stirng."
+    }
     if(typeof itemName != "string")
     {
         throw "Error: Item name was not given or wrong type";
@@ -43,6 +63,11 @@ async function createItem(itemName,itemDescription, status, userId, itemPrice,co
     }
     for(const i of commentId)
     {
+        i = i.trim();
+        if(i.length<=0)
+        {
+            throw "Error: emmpty string was given for a comment Id";
+        }
         if(typeof i != "string")
         {
             throw "Error: Was not given string Ids."
@@ -55,6 +80,11 @@ async function createItem(itemName,itemDescription, status, userId, itemPrice,co
     ///////////////////////////////////Photos will be tricky
     for(const i of photos)
     {
+        i =i.trim();
+        if(i.length<=0)
+        {
+            throw "Error: emmpty string was given for a photos";
+        }
         if(typeof i != "string")
         {
             throw "Error: Was not given an array of string of photos."

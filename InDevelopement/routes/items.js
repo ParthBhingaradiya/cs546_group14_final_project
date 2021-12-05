@@ -10,7 +10,13 @@ router.get('/',async(req,res)=>{
 let listofItem = await itemData.getItemList();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////Enter handlebars file 
 //res.status(500).render('',{itemList:listofItem} )
+res.json(listofItem);
 })
+/////////////////////////////////////////Takes you to a form
+router.get('/newPost',async(req,res)=>{
+    //res.status(500).render("newPageForm")
+    res.status(500).json({Message:"Success"});
+    })
 /////////////////////////////////////////////Gets single item.
 router.get('/:id',async(req,res)=>{
     let id = req.params.id
@@ -37,6 +43,30 @@ router.post('/newPost',async(req,res)=>{
     let itemPrice = req.body.itemPrice;
     let commentId = req.body.commentId;
     let photos = req.body.photos;
+    itemName = itemName.trim();
+    itemDescription = itemName.trim();
+    status = status.trim();
+    userId = userId.trim();
+    if(itemName.length<=0)
+    {
+        //res.status(400).render("ErrorPage",{error:"Error Item name is empty string"})
+        res.status(400).json({Message:"Error: item name is empty stirng."});
+    }
+    if(itemDescription.length<=0)
+    {
+        //res.status(400).render("ErrorPage",{error:"Error Item description is empty string"})
+        res.status(400).json({Message:"Error: item description is empty stirng."});
+    }
+    if(status.length<=0)
+    {
+        //res.status(400).render("ErrorPage",{error:"Error Item status is empty string"})
+        res.status(400).json({Message:"Error: item status is empty stirng."});
+    }
+    if(userId.length<=0)
+    {
+        //res.status(400).render("ErrorPage",{error:"Error Item name is empty string"})
+        res.status(400).json({Message:"Error: item's user Id is empty stirng."});
+    }
     if(typeof itemName != "string")
     {
         //res.status(400).render("ErrorPage",{error:"Error: Item name was not given or wrong type"});
@@ -116,12 +146,10 @@ router.post('/newPost',async(req,res)=>{
     res.redirect("/");
 })
 ////////////////////////////////////////////Take you to a form.
-router.get('/newPost',async(req,res)=>{
-//res.status(500).render("newPageForm")
-res.status(500).json({Message:"Success"});
-})
+
 ///////////////////////////////////////////Post from the form for comment/q&a
 router.post('/:id',async(req,res)=>{
+
 
 })
 module.exports = router; 
