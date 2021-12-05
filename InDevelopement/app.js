@@ -7,7 +7,7 @@ const os = require('os');
 const port = 3001;
 const handlebars = require('express-handlebars')
 const app = express();
-// Database Salone
+// Database Thrift
 const { MongoClient } = require('mongodb');
 // const commonMW = require('./middleware/commonMW');
 // const userRoute = require('./routes/user.route')
@@ -31,7 +31,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 async function main() {
-  const uri = "mongodb://localhost:27017/salon";
+  const uri = "mongodb://localhost:27017/thrift";
   const client = new MongoClient(uri)
   global.dbClient = client;
   try {
@@ -56,7 +56,7 @@ async function main() {
       cookie: { maxAge: 1000 * 60 * 60 * 24 },
       resave: false,
       store: new NedbStore({
-        filename: path.join(os.tmpdir(), "salon-session.db")
+        filename: path.join(os.tmpdir(), "thrift-session.db")
       })
     }))
 
