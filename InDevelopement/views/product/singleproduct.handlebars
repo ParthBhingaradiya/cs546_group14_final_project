@@ -1,174 +1,165 @@
+<!DOCTYPE html>
+<html>
 
-      <!DOCTYPE html>
-      <html>
-         <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>index</title>
-            <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-         </head>
-         <body>
-         	<div class="header">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-md-4">
-				
-				<div class="logo">
-					Logo
-				</div>
-				
-	   			
-			</div>
-			<div class="col-md-8">
-				<div class="right-header">
-						<div class="search">
-				      <input type="text" class="searchTerm" placeholder="What are you looking for?">
-				      <button type="submit" class="searchButton">
-				        <i class="fa fa-search"></i>
-				     </button>
-				 </div>
-	   				<div class="my-account rt-box">
-	   					<div class="dropdown">
-						  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						   My Account
-						  </button>
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						    <a class="dropdown-item" href="#">Action</a>
-						    <a class="dropdown-item" href="#">Another action</a>
-						    <a class="dropdown-item" href="#">Something else here</a>
-						  </div>
-						</div>
-	   				</div>
-	   				<div class="cart-icon rt-box">
-	   					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-	   				</div>
-	   				<div class="sell-btn">
-	   					 <button>Sell</button>
-	   				</div>
-	   			</div>	
-			</div>
-		</div>
-	</div>
-</div>
-            <main class="pro-detail container">
-               <!-- Left Column / Headphones Image -->
-               <div class="left-column">
-                  <img data-image="red" class="active" src="{{base_url}}/img/red.png" alt="">
-               </div>
-               <!-- Right Column -->
-               <div class="right-column">
-                  <!-- Product Description -->
-                  <div class="product-description">
-                     <span>Headphones</span>
-                     <h1>Beats EP</h1>
-                     <p>The preferred choice of a vast range of acclaimed DJs. Punchy, bass-focused sound and high isolation. Sturdy headband and on-ear cushions suitable for live performance</p>
-                  </div>
-                  <!-- Product Configuration -->
-                  <div class="product-configuration">
-                     <!-- Product Color -->
-                     <div class="product-color">
-                        <span>Color</span>
-                        <div class="color-choose">
-                           <div>
-                              <input data-image="red" type="radio" id="red" name="color" value="red" checked>
-                              <label for="red"><span></span></label>
-                           </div>
-                           <div>
-                              <input data-image="blue" type="radio" id="blue" name="color" value="blue">
-                              <label for="blue"><span></span></label>
-                           </div>
-                           <div>
-                              <input data-image="black" type="radio" id="black" name="color" value="black">
-                              <label for="black"><span></span></label>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- Cable Configuration -->
-                     <div class="cable-config">
-                        <span>Cable configuration</span>
-                        <div class="cable-choose">
-                           <button>Straight</button>
-                           <button>Coiled</button>
-                           <button>Long-coiled</button>
-                        </div>
-                        <a href="#">How to configurate your headphones</a>
-                     </div>
-                  </div>
-                  <!-- Product Pricing -->
-                  <div class="product-price">
-                     <span>148$</span>
-                     <a href="#" class="cart-btn">Add to cart</a>
-                     <a href="/customerdetails" class="buynow-btn">Buy now</a>
-                  </div>
-               </div>
-            </main>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>index</title>
+   <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
+   <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="{{base_url}}/js/jquery.min.js"></script>
 
-            <footer class="footer">
-               <div class="container">
-                  <div class="card ">
-                     <div class="row mb-4">
-                        <div class="col-md-12  col-lg-4  col-sm-12 col-xs-4 footer-box-1">
-                           <div class="footer-text pull-left">
-                              <div class="d-flex">
-                                 <h1 class="font-weight-bold mr-2 px-3" style="color:white; background-color:#957bda"> T </h1>
-                                 <h1 style="color: #957bda">Devs</h1>
-                              </div>
-                              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi non pariatur numquam animi nam at impedit odit nisi.</p>
-                              <div class="social mt-2 mb-3"> <i class="fa fa-facebook-official fa-lg"></i> <i class="fa fa-instagram fa-lg"></i> <i class="fa fa-twitter fa-lg"></i> <i class="fa fa-linkedin-square fa-lg"></i> <i class="fa fa-facebook"></i> </div>
-                           </div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-2 empty"></div>
-                        <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-2">
-                           <h5 class="heading">Services</h5>
-                           <ul class="card-text">
-                              <li><a href="#">IT Consulting</a></li>
-                              <li><a href="#">Development</a></li>
-                              <li><a href="#">Cloud</a></li>
-                              <li><a href="#">Support</a></li>
-                           </ul>
-                        </div>
-                        <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-3">
-                           <h5 class="heading">Industries</h5>
-                           <ul class="card-text">
-                              <li><a href="#">Finance</a></li>
-                              <li><a href="#">Public Sector</a></li>
-                              <li><a href="#">Smart Office</a></li>
-                              <li><a href="#">Retail</a></li>
-                           </ul>
-                        </div>
-                        <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-4">
-                           <h5 class="heading">Company</h5>
-                           <ul class="card-text">
-                              <li><a href="#">About Us</a></li>
-                              <li><a href="#">Blog</a></li>
-                              <li><a href="#">Contact</a></li>
-                              <li><a href="#">Join Us</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="divider mb-4"> </div>
-                     <div class="row copy-right">
-                        <div class="col-md-6 col-sm-12 col-xs-6">
-                           <div class="pull-left">
-                              <p><i class="fa fa-copyright"></i> 2020 thezpdesign</p>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-6">
-                           <div class="pull-right d-flex policy">
-                              <a href="#">Terms of Use</a>
-                              <a href="#">Privacy Policy</a>
-                              <a href="#">Cookie Policy</a>
-                           </div>
+</head>
+
+<body>
+   <div class="header">
+      <div class="container">
+         <div class="row align-items-center">
+            <div class="col-md-4">
+
+               <div class="logo">
+                  Logo
+               </div>
+
+
+            </div>
+            <div class="col-md-8">
+               <div class="right-header">
+                  <div class="search">
+                     <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                     <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                     </button>
+                  </div>
+                  <div class="my-account rt-box">
+                     <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                           My Account
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                           <a class="dropdown-item" href="#">Action</a>
+                           <a class="dropdown-item" href="#">Another action</a>
+                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                      </div>
                   </div>
+                  <div class="cart-icon rt-box">
+                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                  </div>
+                  <div class="sell-btn">
+                     <button>Sell</button>
+                  </div>
                </div>
-            </footer>
-         </body>
-      </html>
- 
+            </div>
+         </div>
+      </div>
+   </div>
+   <main class="pro-detail container">
+      <!-- Left Column / Headphones Image -->
+      <div class="left-column">
+         <img data-image="red" class="active" src="{{base_url}}/img/red.png" alt="">
+      </div>
+      <!-- Right Column -->
+      <div class="right-column">
+         <!-- Product Description -->
+         <div class="product-description">
+            <span>Headphones</span>
+            <h1>Beats EP</h1>
+            <p>The preferred choice of a vast range of acclaimed DJs. Punchy, bass-focused sound and high isolation.
+               Sturdy headband and on-ear cushions suitable for live performance</p>
+         </div>
+         <!-- Product Configuration -->
+         <div class="product-configuration">
+            <!-- Cable Configuration -->
+            <div class="cable-config">
+               <span>Cable configuration</span>
+               <div class="cable-choose">
+                  <button>Straight</button>
+                  <button>Coiled</button>
+                  <button>Long-coiled</button>
+               </div>
+               <a href="#">How to configurate your headphones</a>
+            </div>
+         </div>
+         <!-- Product Pricing -->
+         <div class="product-price">
+            <span>148$</span>
+            <a href="#" class="cart-btn">Add to cart</a>
+            <a href="/customerdetails" class="buynow-btn">Buy now</a>
+         </div>
+      </div>
+   </main>
+
+   <footer class="footer">
+      <div class="container">
+         <div class="card ">
+            <div class="row mb-4">
+               <div class="col-md-12  col-lg-4  col-sm-12 col-xs-4 footer-box-1">
+                  <div class="footer-text pull-left">
+                     <div class="d-flex">
+                        <h1 class="font-weight-bold mr-2 px-3" style="color:white; background-color:#957bda"> T </h1>
+                        <h1 style="color: #957bda">Devs</h1>
+                     </div>
+                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi non pariatur
+                        numquam animi nam at impedit odit nisi.</p>
+                     <div class="social mt-2 mb-3"> <i class="fa fa-facebook-official fa-lg"></i> <i
+                           class="fa fa-instagram fa-lg"></i> <i class="fa fa-twitter fa-lg"></i> <i
+                           class="fa fa-linkedin-square fa-lg"></i> <i class="fa fa-facebook"></i> </div>
+                  </div>
+               </div>
+               <div class="col-md-2 col-sm-2 col-xs-2 empty"></div>
+               <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-2">
+                  <h5 class="heading">Services</h5>
+                  <ul class="card-text">
+                     <li><a href="#">IT Consulting</a></li>
+                     <li><a href="#">Development</a></li>
+                     <li><a href="#">Cloud</a></li>
+                     <li><a href="#">Support</a></li>
+                  </ul>
+               </div>
+               <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-3">
+                  <h5 class="heading">Industries</h5>
+                  <ul class="card-text">
+                     <li><a href="#">Finance</a></li>
+                     <li><a href="#">Public Sector</a></li>
+                     <li><a href="#">Smart Office</a></li>
+                     <li><a href="#">Retail</a></li>
+                  </ul>
+               </div>
+               <div class="col-md-4 col-lg-2 col-sm-4 col-xs-2 footer-box footer-box-4">
+                  <h5 class="heading">Company</h5>
+                  <ul class="card-text">
+                     <li><a href="#">About Us</a></li>
+                     <li><a href="#">Blog</a></li>
+                     <li><a href="#">Contact</a></li>
+                     <li><a href="#">Join Us</a></li>
+                  </ul>
+               </div>
+            </div>
+            <div class="divider mb-4"> </div>
+            <div class="row copy-right">
+               <div class="col-md-6 col-sm-12 col-xs-6">
+                  <div class="pull-left">
+                     <p><i class="fa fa-copyright"></i> 2020 thezpdesign</p>
+                  </div>
+               </div>
+               <div class="col-md-6 col-sm-12 col-xs-6">
+                  <div class="pull-right d-flex policy">
+                     <a href="#">Terms of Use</a>
+                     <a href="#">Privacy Policy</a>
+                     <a href="#">Cookie Policy</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </footer>
+</body>
+
+</html>
