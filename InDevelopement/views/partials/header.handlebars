@@ -24,20 +24,22 @@
                                     My Account
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                     {{#if user}}
-                                    <div class="dropdown-item userlogo">
+                            {{#if user.name}}
+                                <div class="dropdown-item userlogo">
                               <img class="user-profile" src="{{base_url}}/img/user.png">
                               <a href="#">Parth Bhingradiya</a>
                            </div>
+                            <a class="dropdown-item" href="#">Item selling</a>
+                                    <a class="dropdown-item" href="#">Previously Sold</a>
+                                    <a class="dropdown-item" href="#">Previously Purchased</a>
+                                    <a class="dropdown-item" href="/logout">Logout</a>
                            {{else}}
                            <div class="dropdown-item userlogo">
                                 <img class="user-profile" src="{{base_url}}/img/user.png">
-                              <a href="#">Signin</a>
+                              <a href="/login">SignIn</a> & <a href="/registration">SignUp</a> 
                            </div>
                             {{/if}}
-                                    <a class="dropdown-item" href="#">My Product</a>
-                                    <a class="dropdown-item" href="#">Sold Product</a>
-                                    <a class="dropdown-item" href="#">Perchage Product</a>
+                                   
                                 </div>
                             </div>
                         </div>

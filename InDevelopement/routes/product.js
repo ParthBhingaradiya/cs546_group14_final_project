@@ -3,11 +3,11 @@ const router = express.Router();
 const data = require('../data');
 const users = data.users;
 
-router.get("/", async (req, res) => {
-    res.render(`product/allproduct`);
+router.get("/", async(req, res) => {
+    res.render(`product/allproduct`, { user: req.session.userauth });
 })
 
-router.post("/", async (req, res) => {
+router.post("/", async(req, res) => {
     try {
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
@@ -26,15 +26,15 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.get("/singleProduct", async (req, res) => {
+router.get("/singleProduct", async(req, res) => {
     res.render(`product/singleproduct`);
 })
 
-router.get("/customerdetails", async (req, res) => {
+router.get("/customerdetails", async(req, res) => {
     res.render(`product/customerdetails`);
 })
 
-router.get("/thankyou", async (req, res) => {
+router.get("/thankyou", async(req, res) => {
     res.render(`product/thankyou`);
 })
 
