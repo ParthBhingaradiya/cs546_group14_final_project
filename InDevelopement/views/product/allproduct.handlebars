@@ -18,6 +18,9 @@
 
 <body>
    {{> header}}
+    
+    {{itemName}}
+     
     <div class="product-sec">
         <div class="container">
             <div class="head">
@@ -25,20 +28,22 @@
             </div>
 
             <div class="row">
+{{#each itemDatas}}
                 <div class="pro-box">
                     <div class="product-grid">
                         <div class="product-image">
-                            <a href="/singleproduct" class="image">
+                            <a href="item/{{_id}}" class="image">
                                 <img class="img-1" src="{{base_url}}/img/noImage.jpg">
                             </a>
 
                         </div>
                         <div class="product-content">
-                            <h3 class="title"><a href="#">Women's Blouse Top</a></h3>
-                            <div class="price">$65.99</div>
+                            <h3 class="title"><a href="item/{{_id}}">{{itemName}}</a></h3>
+                            <div class="price">${{itemPrice}}</div>
                         </div>
                     </div>
                 </div>
+{{/each}}
                 <div class="pro-box">
                     <div class="product-grid">
                         <div class="product-image">

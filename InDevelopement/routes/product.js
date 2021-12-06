@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const users = data.users;
+const items = data.items;
 
 router.get("/", async(req, res) => {
-    res.render(`product/allproduct`, { user: req.session.userauth });
+    let itemData = await items.getItemList();
+    res.render(`product/allproduct`, { user: req.session.userauth, itemDatas: itemData });
 })
 
 router.post("/", async(req, res) => {
@@ -26,12 +28,22 @@ router.post("/", async(req, res) => {
     }
 })
 
-router.get("/singleProduct", async(req, res) => {
-    res.render(`product/singleproduct`);
+router.get("/:id", async(req, res) => {
+    let id = req.params.id;
+    let itemData = await items.findItem(id);
+    res.render(`product/singleproduct`, { itemDatas: itemData });
 })
 
 router.get("/customerdetails", async(req, res) => {
     res.render(`product/customerdetails`);
+})
+
+router.get("/addproduct", async(req, res) => {
+    res.render(`product/productdetails`);
+})
+
+router.post("/addproduct", async(req, res) => {
+    res.render(`product/productdetails`);
 })
 
 router.get("/thankyou", async(req, res) => {

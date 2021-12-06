@@ -17,9 +17,10 @@ router.post("/login", async(req, res) => {
         let email = req.body.username;
         let accountPassword = req.body.password;
         let checkUser = await users.checkUser(email, accountPassword);
+        console.log(checkUser);
         let userId = ObjectId(checkUser._id).toString();
         req.session.userauth = { name: checkUser.firstName + ' ' + checkUser.lastName, email: checkUser.email, user_id: userId };
-        res.redirect('/');
+        res.redirect('/item');
     } catch (e) {
         res.render(`login/login`, { err: e });
     }
@@ -32,7 +33,7 @@ router.get("/registration", async(req, res) => {
 
 router.get('/logout', async(req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/item');
 });
 
 

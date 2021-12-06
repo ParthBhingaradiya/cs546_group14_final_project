@@ -29,44 +29,38 @@
    <main class="pro-detail container">
       <div class="left-column">
          <div>
+         <form action="addproduct" method="post">
             <!-- Name -->
             <div class="md-form md-outline">
-               <label for="form75">Name</label>
+               <label for="form75">ItemName</label>
                <input type="text" id="form75" class="form-control pr-6">
             </div>
             <!-- address -->
             <div class="md-form md-outline">
-               <label for="form75">Address</label>
+               <label for="form75">Description</label>
                <input type="text" id="form75" class="form-control pr-6">
             </div>
             <!-- phone number -->
             <div class="md-form md-outline">
-               <label for="form75">Phone No.</label>
+               <label for="form75">Status</label>
                <input type="text" id="form75" class="form-control pr-6">
             </div>
             <!-- Email -->
             <div class="md-form md-outline">
-               <label for="form77">Email</label>
+               <label for="form77">ItemPrice</label>
                <input type="email" id="form77" class="form-control pr-6">
             </div>
-            <!-- card holder name -->
-            <div class="md-form md-outline">
-               <label for="form77">Card Holder Name</label>
-               <input type="text" id="form77" class="form-control pr-6">
-            </div>
+            
             <!-- cvv -->
             <div class="md-form md-outline">
-               <label for="form77">Cvv</label>
-               <input type="text" id="form77" class="form-control pr-6">
+               <label for="form77">Choose Photos</label>
+               <input type="file" id="form77" class="form-control pr-6">
             </div>
-            <!-- card holder name -->
-            <div class="md-form md-outline">
-               <label for="form77">Expiry date</label>
-               <input type="date" id="form77" class="form-control pr-6">
-            </div>
+           
             <div class="text-right pb-2">
-               <a href="thankyou" class="buynow-btn">Place order</a>
+               <input type="submit" value="Add Item" class="buynow-btn">
             </div>
+            </form>
          </div>
       </div>
 
