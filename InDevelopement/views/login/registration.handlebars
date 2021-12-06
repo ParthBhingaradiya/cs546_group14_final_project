@@ -1,0 +1,69 @@
+<div id="login">
+    <h3 class="text-center text-white">Login form</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div class="col-md-12">
+                    <form action="/" id="login-form" class="form" method="post">
+                        <h3 class="text-center text-info">Registration</h3>
+
+                        <div class="form-group">
+                            <label class="text-info">First name:</label><br>
+                            <input type="text" name="firstName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info">Last name:</label><br>
+                            <input type="text" name="lastName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info">Email:</label><br>
+                            <input type="email" name="username" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-info">Address:</label><br>
+                            <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-info">City:</label><br>
+                            <input type="text" name="city" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-info">Pincode:</label><br>
+                            <input type="number" name="pincode" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-info">State:</label><br>
+                            <input type="text" name="state" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="text-info">Confirm Password:</label><br>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-info">age:</label><br>
+                            <input type="number" name="age" class="form-control" required>
+                        </div>
+                        {{#if err}}
+                        <div class="form-group">
+                            <label class="erro-info">{{err}}</label><br>
+                        </div>
+                        {{/if}}
+
+
+
+                        <div class="form-group" style="display: flex;justify-content: center;">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
