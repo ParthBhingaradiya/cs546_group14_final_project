@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const os = require('os');
 
+
+
 const port = 3001;
 const handlebars = require('express-handlebars')
 const app = express();
@@ -11,9 +13,9 @@ const { MongoClient } = require('mongodb');
 // const userRoute = require('./routes/user.route')
 const loginRoute = require('./routes/login.route')
 const productRoute = require('./routes/product')
-// const adminRoute = require('./routes/admin.route')
-// const customerRoute = require('./routes/customer.route')
-// const barberRoute = require('./routes/barber.route')
+    // const adminRoute = require('./routes/admin.route')
+    // const customerRoute = require('./routes/customer.route')
+    // const barberRoute = require('./routes/barber.route')
 
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -72,18 +74,18 @@ async function main() {
         // app.use(commonMW)
         // app.use(authMW)
 
-        app.use("/", loginRoute)
-        // app.use("/admin", adminRoute)
-        // app.use("/customer", customerRoute)
-        // app.use("/barber", barberRoute)
+        app.use("/login", loginRoute)
+            // app.use("/admin", adminRoute)
+            // app.use("/customer", customerRoute)
+            // app.use("/barber", barberRoute)
         app.use('/', productRoute)
 
-        app.listen(port, async () => {
+        app.listen(port, async() => {
             console.log(`App listening to port ${port}`)
-            // let objUser = await UserService.getUserByEmail(userEmail)
-            // if (objUser)
-            //     return
-            // const hash = await bcrypt.hash(password, saltRounds);
+                // let objUser = await UserService.getUserByEmail(userEmail)
+                // if (objUser)
+                //     return
+                // const hash = await bcrypt.hash(password, saltRounds);
 
             // let result = await UserService.addUser({
             //     userEmail: userEmail,

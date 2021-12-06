@@ -17,11 +17,3 @@ body {
   #login .container #login-row #login-column #login-box #login-form #register-link {
     margin-top: -85px;
   }
-
-  label.erro-info {
-    color: red;
-    padding: 10px;
-    border: 1px solid;
-    background: #fdd7d7;
-    width: 70%;
-}
