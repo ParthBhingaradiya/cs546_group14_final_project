@@ -226,11 +226,28 @@ async function addCommentToItem(commentId,itemId)
     
 }
 
+//Returns a list of items that are bought (Cart)
+async function getCartItem()
+{
+    const itemCollection = await items();
+    let itemList = [];
+    const itemTotalList = await itemCollection.find({}).toArray();
+    for(const i of itemTotalList)
+    {
+        if(i["status"]=="Sold")
+        {
+            itemList.push(i);
+            i["_id"] =  i["_id"].toString();
+        }
+    }
+    return itemList;
+}
+
 module.exports={
     createItem,
     findItem,
     boughtItem,
     getItemList,
-    addCommentToItem
-
+    addCommentToItem,
+    getCartItem
 };
