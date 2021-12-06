@@ -1,0 +1,54 @@
+ <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                     
+                    <div class="logo">
+                       <a href="/">OLX</a>
+                    </div>
+                    
+
+                </div>
+                <div class="col-md-8">
+                    <div class="right-header">
+                        <div class="search">
+                            <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="my-account rt-box">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    My Account
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                     {{#if user}}
+                                    <div class="dropdown-item userlogo">
+                              <img class="user-profile" src="{{base_url}}/img/user.png">
+                              <a href="#">Parth Bhingradiya</a>
+                           </div>
+                           {{else}}
+                           <div class="dropdown-item userlogo">
+                                <img class="user-profile" src="{{base_url}}/img/user.png">
+                              <a href="#">Signin</a>
+                           </div>
+                            {{/if}}
+                                    <a class="dropdown-item" href="#">My Product</a>
+                                    <a class="dropdown-item" href="#">Sold Product</a>
+                                    <a class="dropdown-item" href="#">Perchage Product</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-icon rt-box">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </div>
+                        <div class="sell-btn">
+                            <button>Sell</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
