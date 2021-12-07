@@ -63,6 +63,7 @@ async function createUser(firstName, lastName, email, address, city, pincode, st
         prevSold: new Array(),
         commentSeller: new Array(),
         cart: new Array(),
+        wishlist: new Array()
     }
     await userCollection.insertOne(doc);
     const newUser = await userCollection.findOne(doc);
@@ -118,8 +119,114 @@ async function getSingleUser(userid) {
     const found = await userCollection.findOne({ _id: parseId });
     return found
 }
+
+async function addToCartitem(userid, itemid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemid != "string") {
+        throw "Error: was not given the right ID for the item"
+    }
+    const user1 = await getSingleUser(userid);
+    const newlist = user1.cart;
+    newlist.push(itemid);
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: newlist,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";
+}
+
+async function addToWishlistitem(userid, itemid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemid != "string") {
+        throw "Error: was not given the right ID for the item"
+    }
+    const user1 = await getSingleUser(userid);
+    const newlist = user1.wishlist;
+    newlist.push(itemid);
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: newlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";
+}
+
+//It will return array of item ids
+async function showCartItem(userid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    const user = await getSingleUser(userid);
+    return user.cart;
+}
+
+//It will return array of item ids
+async function showWishlistItem(userid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    const user = await getSingleUser(userid);
+    return user.wishlist;
+}
 module.exports = {
     createUser,
     checkUser,
-    getSingleUser
+    getSingleUser,
+    addToCartitem,
+    addToWishlistitem,
+    showCartItem,
+    showWishlistItem
 };
