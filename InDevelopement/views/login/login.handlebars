@@ -14,9 +14,15 @@
                             <label for="password" class="text-info">Password:</label><br>
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
+                         {{#if err}}
+                        <div class="form-group">
+                            <label class="erro-info">{{err}}</label><br>
+                        </div>
+                        {{/if}}
                         <div class="form-group" style="display: flex;justify-content: center;">
                             <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
                         </div>
+                        
                         <div>
                             <a href="/registration" class="text-info">Registration</a>
                         </div>
