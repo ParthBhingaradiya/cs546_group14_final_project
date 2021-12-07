@@ -50,13 +50,4 @@ router.post("/", upload.array('uploaded_file'), async(req, res) => {
 
 
 
-router.get("/customerdetails", async(req, res) => {
-    res.render(`product/customerdetails`);
-})
-
-router.get("/thankyou", async(req, res) => {
-    res.render(`product/thankyou`);
-})
-
-
 module.exports = router;
