@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Shopping Cart | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+  
+    <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
+       <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="{{base_url}}/js/jquery.min.js"></script>
+
+
+</head>
+
+<body class="loading" data-layout="detached" data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+ {{> header}}
+     <div class="row cart">
+                                        <div class="col-lg-8">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless table-centered mb-0">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>Product</th>
+                                                            <th>Price</th>
+                                                            <!-- <th>Quantity</th> -->
+                                                            <th style="width: 50px;"></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{{base_url}}/img/noImage.jpg" alt="contact-img" title="contact-img" class="rounded me-3" height="64" />
+                                                                <p class="m-0 d-inline-block align-middle font-16">
+                                                                    <a href="apps-ecommerce-products-details.html" class="text-body">Amazing Modern Chair</a>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                $148.66
+                                                            </td>
+                                                            <!-- <td>
+                                                                <input type="number" min="1" value="5" class="form-control" placeholder="Qty" style="width: 90px;">
+                                                            </td> -->
+
+                                                            <td>
+                                                                <a href="javascript:void(0);" class="action-icon"> <i class="fa fa-trash"></i></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
+                                                         Add to Cart </a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="text-sm-end">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+ 
+  {{> footer}}
+</body>
+
+</html>

@@ -1,8 +1,10 @@
 const itemsRoutes = require('./items');
 const productRoute = require('./product')
 const addProductRoute = require('./addproduct')
+
 const constructorMethod = (app) => {
-    app.use('/item', productRoute);
+    app.use('/item', itemsRoutes);
+    app.use('/', productRoute);
     app.use('/additem', addProductRoute);
 
     app.use('*', (req, res) => {

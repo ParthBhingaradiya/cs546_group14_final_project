@@ -41,14 +41,16 @@ router.post("/", upload.array('uploaded_file'), async(req, res) => {
         })
         let commentId = []
         const additem = await items.createItem(itemName, description, status, userId, itemPrice, commentId, fileName)
-        res.redirect(`/item`);
+        res.redirect(`/`);
     } catch (e) {
         console.log(e, 'test');
         res.redirect(`/additem`, { err: e });
     }
 })
 
-router.get("/myitem", async(req, res) => {
+
+
+router.get("/customerdetails", async(req, res) => {
     res.render(`product/customerdetails`);
 })
 

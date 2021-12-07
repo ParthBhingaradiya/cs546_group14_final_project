@@ -111,8 +111,15 @@ async function checkUser(email, accountPassword) {
         }
     }
 }
+
+async function getSingleUser(userid) {
+    parseId = ObjectId(userid);
+    const userCollection = await user();
+    const found = await userCollection.findOne({ _id: parseId });
+    return found
+}
 module.exports = {
     createUser,
     checkUser,
+    getSingleUser
 };
-

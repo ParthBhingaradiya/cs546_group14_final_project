@@ -37,17 +37,34 @@ img.user-profile {
     color: #9DBFAF;
     height: 40px;
     padding: 0px 15px;
-    padding-left: 40px;
+    padding-right: 45px;
+}
+
+.row.cart {
+    margin: 56px;
+}
+
+.cart .table-responsive {
+    margin-bottom: 60px;
 }
 
 button.searchButton {
     position: absolute;
     border: none;
+    margin-left: 200px;
     left: 0;
     background-color: transparent;
     top: 50%;
     transform: translateY(-50%);
     left: 8px;
+}
+
+button.searchButton {
+    background: black;
+    color: white;
+    padding: 8px;
+    padding-left: 15px;
+    border-radius: 0px 7px 7px 0px;
 }
 
 .header {
@@ -66,6 +83,20 @@ button.searchButton {
     top: 50%;
     transform: translateY(-50%);
     right: 10px;
+}
+
+label.seller_name {
+    border: 1px solid;
+    padding: 7px;
+    color: white;
+    background: #a0a0a0;
+    border-radius: 7px;
+    font-weight: 100;
+}
+
+.cart img.rounded.me-3 {
+    width: 10%;
+    height: 50px;
 }
 
 .my-account .dropdown {
@@ -142,7 +173,7 @@ button.searchButton {
 
 .product-grid .product-image img {
     width: 100%;
-    height: auto;
+    height: 200px;
 }
 
 .product-grid .product-image .img-1 {

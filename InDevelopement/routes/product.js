@@ -31,16 +31,10 @@ router.post("/", async(req, res) => {
 router.get("/:id", async(req, res) => {
     let id = req.params.id;
     let itemData = await items.findItem(id);
-    res.render(`product/singleproduct`, { user: req.session.userauth, itemDatas: itemData });
+    let userData = await users.getSingleUser(itemData.userId)
+    res.render(`product/singleproduct`, { user: req.session.userauth, itemDatas: itemData, userDatas: userData });
 })
 
-router.get("/customerdetails", async(req, res) => {
-    res.render(`product/customerdetails`);
-})
-
-router.get("/thankyou", async(req, res) => {
-    res.render(`product/thankyou`);
-})
 
 
 module.exports = router;
