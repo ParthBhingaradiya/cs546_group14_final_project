@@ -45,8 +45,11 @@ router.get("/singleitem/:id", async (req, res) => {
 
 
 router.get("/about", async (req, res) => {
-
     res.render(`userproduct/about`, { user: req.session.userauth, cart: req.session.cartitem });
+})
+
+router.get("/profile", async (req, res) => {
+    res.render(`userproduct/profile`, { user: req.session.userauth, cart: req.session.cartitem });
 })
 
 module.exports = router;

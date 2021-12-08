@@ -67,6 +67,13 @@ ul.card-text li {
     font-weight: 900;
 }
 
+
+.about-site td {
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
 .about-site {
     margin: 10px;
     line-height: 30px;
