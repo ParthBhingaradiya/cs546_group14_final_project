@@ -75,17 +75,17 @@ async function main() {
         // app.use(authMW)
 
         app.use("/", loginRoute)
-            // app.use("/admin", adminRoute)
-            // app.use("/customer", customerRoute)
-            // app.use("/barber", barberRoute)
-            // app.use('/item', productRoute)
+        // app.use("/admin", adminRoute)
+        // app.use("/customer", customerRoute)
+        // app.use("/barber", barberRoute)
+        // app.use('/item', productRoute)
         configRoutes(app);
-        app.listen(port, async() => {
-            console.log(`App listening to port ${port}`)
-                // let objUser = await UserService.getUserByEmail(userEmail)
-                // if (objUser)
-                //     return
-                // const hash = await bcrypt.hash(password, saltRounds);
+        app.listen(port, async () => {
+            console.log(`Your server is running on http://localhost:${port}`);
+            // let objUser = await UserService.getUserByEmail(userEmail)
+            // if (objUser)
+            //     return
+            // const hash = await bcrypt.hash(password, saltRounds);
 
             // let result = await UserService.addUser({
             //     userEmail: userEmail,
