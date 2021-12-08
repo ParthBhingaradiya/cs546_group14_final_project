@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>index</title>
+   <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
+   <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="{{base_url}}/js/jquery.min.js"></script>
+
+</head>
+
+<body>
+  {{> header}}
+   <main class="pro-detail container">
+      <!-- Left Column / Headphones Image -->
+      <div class="left-column">
+         {{#if itemDatas.photos}}
+         <img data-image="red" class="active" src="{{base_url}}/img/{{itemDatas.photos}}" alt="">
+          {{else}}
+                                <img class="img-1" src="{{base_url}}/img/noImage.jpg">
+                            {{/if}}
+      </div>
+      <!-- Right Column -->
+      <div class="right-column">
+         <!-- Product Description -->
+         <div class="product-description">
+            <label class="seller_name">Seller Name : {{userDatas.firstName}} {{userDatas.lastName}}</label>
+            <br>
+            <span>{{itemDatas.status}}</span>
+            <h1>{{itemDatas.itemName}}</h1>
+            <p>{{itemDatas.itemDescription}}</p>
+         </div>
+         
+         <!-- Product Pricing -->
+         <div class="product-price">
+            <span>{{itemDatas.itemPrice}}$</span>
+            <br>
+            <br>
+            <a href="#" class="cart-btn">Add to cart</a>
+            <a href="/item/checkout?id={{itemDatas._id}}" class="buynow-btn">Buy now</a>
+         </div>
+      </div>
+   </main>
+   {{> footer}}
+</body>
+
+</html>
