@@ -7,7 +7,6 @@ const items = data.items;
 router.get("/", async (req, res) => {
     let itemData = await items.getItemList();
     if (req.session.userauth) {
-        console.log('test')
         let userId = req.session.userauth.user_id
         const viewCart = await users.showCartItem(userId);
         const cartitem = await items.findaddTocartItem(viewCart)
