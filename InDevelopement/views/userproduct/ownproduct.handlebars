@@ -17,10 +17,10 @@
 </head>
 
 <body>
-   {{> header}}
-    
+    {{> header}}
+
     {{itemName}}
-     
+
     <div class="product-sec">
         <div class="container">
             {{#if itemDatas}}
@@ -29,37 +29,38 @@
             </div>
 
             <div class="row">
-                
-{{#each itemDatas}}
+
+                {{#each itemDatas}}
                 <div class="pro-box">
                     <div class="product-grid">
                         <div class="product-image">
-                            <a href="/{{_id}}" class="image">
-                           {{#if photos.length}}
+                            {{!-- <a href="/{{_id}}" class="image"> --}}
+                                {{#if photos.length}}
                                 <img class="img-1" src="{{base_url}}/img/{{photos}}">
-                            {{else}}
+                                {{else}}
                                 <img class="img-1" src="{{base_url}}/img/noImage.jpg">
-                            {{/if}}
-                            </a>
+                                {{/if}}
+                                {{!-- </a> --}}
 
                         </div>
                         <div class="product-content">
-                            <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3>
+                            {{!-- <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3> --}}
+                            <h3 class="title"><a href="#">{{itemName}}</a></h3>
                             <div class="price">${{itemPrice}}</div>
                         </div>
                     </div>
                 </div>
-{{/each}}
+                {{/each}}
 
-               
-               
+
+
 
             </div>
-             {{else}}
-<h1>No data Found</h1>
-{{/if}}
+            {{else}}
+            <h1>No data Found</h1>
+            {{/if}}
         </div>
-       
+
     </div>
 
 

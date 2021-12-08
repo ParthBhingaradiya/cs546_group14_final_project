@@ -250,6 +250,20 @@ async function searchItem(searchTerm) {
     }
 }
 
+async function findaddTocartItem(itemId) {
+    const itemsCollection = await items();
+    const findInfo = await itemsCollection.find({
+        _id: {
+            $in: itemId
+        }
+    }).toArray()
+    if (findInfo == null) {
+        throw "No item with that id."
+    } else {
+        return findInfo;
+    }
+}
+
 module.exports = {
     createItem,
     findItem,
@@ -259,5 +273,6 @@ module.exports = {
     getCartItem,
     findUserItem,
     searchItem,
-    getSoldItemList
+    getSoldItemList,
+    findaddTocartItem
 };

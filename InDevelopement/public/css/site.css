@@ -51,7 +51,7 @@ img.user-profile {
 button.searchButton {
     position: absolute;
     border: none;
-    margin-left: 200px;
+    margin-left: 215px;
     left: 0;
     background-color: transparent;
     top: 50%;
@@ -456,7 +456,9 @@ footer .footer-box h5 {
 .cable-choose {
     margin-bottom: 20px;
 }
-
+main.pro-detail.container {
+    margin-top: 20px;
+}
 .cable-choose button {
     border: 2px solid #E1E8EE;
     border-radius: 6px;
@@ -466,6 +468,22 @@ footer .footer-box h5 {
     background-color: #fff;
     cursor: pointer;
     transition: all .5s;
+}
+
+img.single-img {
+    max-height: 500px;
+}
+
+li.user-rv {
+    list-style: none;
+}
+.review-user {
+    padding: 10px;
+    background: #4e4e4e;
+    color: white;
+    border-radius: 10px;
+    width: 50%;
+    margin: 10px;
 }
 
 .cable-choose button:hover,

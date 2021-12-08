@@ -1,6 +1,8 @@
 const items = require("./items");
-const users=require("./user");
-module.exports={
+const users = require("./user");
+const comments = require("./comments");
+module.exports = {
     items,
-    users
+    users,
+    comments
 }

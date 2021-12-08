@@ -120,7 +120,7 @@ async function getSingleUser(userid) {
     return found
 }
 
-async function addToCartitem(userid, itemid){
+async function addToCartitem(userid, itemid) {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
@@ -129,7 +129,7 @@ async function addToCartitem(userid, itemid){
     }
     const user1 = await getSingleUser(userid);
     const newlist = user1.cart;
-    newlist.push(itemid);
+    newlist.push(ObjectId(itemid));
     let parseId;
     try {
         parseId = ObjectId(userid);
@@ -139,7 +139,7 @@ async function addToCartitem(userid, itemid){
     const doc = {
         firstName: user1.firstName,
         lastName: user1.lastName,
-        email: user.email,
+        email: user1.email,
         address: user1.address,
         city: user1.city,
         pincode: user1.pincode,
@@ -147,7 +147,7 @@ async function addToCartitem(userid, itemid){
         accountPassword: user1.accountPassword,
         age: user1.age,
         avgRating: user1.avgRating,
-        prevPurchase:user1.prevPurchase,
+        prevPurchase: user1.prevPurchase,
         prevSold: user1.prevSold,
         commentSeller: user1.commentSeller,
         cart: newlist,
@@ -162,7 +162,7 @@ async function addToCartitem(userid, itemid){
     return "Added";
 }
 
-async function addToWishlistitem(userid, itemid){
+async function addToWishlistitem(userid, itemid) {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
@@ -189,7 +189,7 @@ async function addToWishlistitem(userid, itemid){
         accountPassword: user1.accountPassword,
         age: user1.age,
         avgRating: user1.avgRating,
-        prevPurchase:user1.prevPurchase,
+        prevPurchase: user1.prevPurchase,
         prevSold: user1.prevSold,
         commentSeller: user1.commentSeller,
         cart: user1.cart,
@@ -205,7 +205,7 @@ async function addToWishlistitem(userid, itemid){
 }
 
 //It will return array of item ids
-async function showCartItem(userid){
+async function showCartItem(userid) {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
@@ -214,7 +214,7 @@ async function showCartItem(userid){
 }
 
 //It will return array of item ids
-async function showWishlistItem(userid){
+async function showWishlistItem(userid) {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
@@ -223,7 +223,7 @@ async function showWishlistItem(userid){
 }
 
 //Call this function while user purchase some items, we are adding item id to prevPurchase array
-async function addPurchaseItem(userid, itemid){
+async function addPurchaseItem(userid, itemid) {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
@@ -232,7 +232,7 @@ async function addPurchaseItem(userid, itemid){
     }
     const user1 = await getSingleUser(userid);
     const newlist = user1.prevPurchase;
-    newlist.push(itemid);
+    newlist.push(ObjectId(itemid));
     let parseId;
     try {
         parseId = ObjectId(userid);
@@ -242,7 +242,7 @@ async function addPurchaseItem(userid, itemid){
     const doc = {
         firstName: user1.firstName,
         lastName: user1.lastName,
-        email: user.email,
+        email: user1.email,
         address: user1.address,
         city: user1.city,
         pincode: user1.pincode,
@@ -250,7 +250,7 @@ async function addPurchaseItem(userid, itemid){
         accountPassword: user1.accountPassword,
         age: user1.age,
         avgRating: user1.avgRating,
-        prevPurchase:newlist,
+        prevPurchase: newlist,
         prevSold: user1.prevSold,
         commentSeller: user1.commentSeller,
         cart: user1.cart,
@@ -265,10 +265,7 @@ async function addPurchaseItem(userid, itemid){
     return "Added";
 }
 //It will return array of item ids of previous puschase item
-async function showPreviousPurchaseItem(userid){
-    if (typeof userid != "string") {
-        throw "Error: was not given the right ID for the user"
-    }
+async function showPreviousPurchaseItem(userid) {
     const user = await getSingleUser(userid);
     return user.prevPurchase;
 }

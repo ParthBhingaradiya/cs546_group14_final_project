@@ -1,62 +1,63 @@
-   
- <div class="header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                     
-                    <div class="logo">
-                       <a href="/">OLX</a>
-                    </div>
-                    
+<div class="header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4">
 
+                <div class="logo">
+                    <a href="/">OLX</a>
                 </div>
-                <div class="col-md-8">
-                    <div class="right-header">
-                        <div class="search">
-                            <form action="/item/search" method="post">
-                            <input type="text" class="searchTerm" name="searchItem" placeholder="What are you looking for?">
+
+
+            </div>
+            <div class="col-md-8">
+                <div class="right-header">
+                    <div class="search">
+                        <form action="/item/search" method="post">
+                            <input type="text" class="searchTerm" name="searchItem"
+                                placeholder="What are you looking for?">
                             <button type="submit" class="searchButton">
                                 <i class="fa fa-search"></i>
                             </button>
-                            </form>
-                        </div>
-                        <div class="my-account rt-box">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    My Account
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {{#if user.name}}
+                        </form>
+                    </div>
+                    <div class="my-account rt-box">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                My Account
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {{#if user.name}}
                                 <div class="dropdown-item userlogo">
-                              <img class="user-profile" src="{{base_url}}/img/user.png">
-                              <a href="#">Parth Bhingradiya</a>
-                           </div>
-                            <a class="dropdown-item" href="/item/myitem">Item selling</a>
-                                    <a class="dropdown-item" href="/item/soldItem">Previously Sold</a>
-                                    <a class="dropdown-item" href="#">Previously Purchased</a>
-                                    <a class="dropdown-item" href="/logout">Logout</a>
-                           {{else}}
-                           <div class="dropdown-item userlogo">
-                                <img class="user-profile" src="{{base_url}}/img/user.png">
-                              <a href="/login">SignIn</a> & <a href="/registration">SignUp</a> 
-                           </div>
-                            {{/if}}
-                                   
+                                    <img class="user-profile" src="{{base_url}}/img/user.png">
+                                    <a href="#">{{user.name}}</a>
                                 </div>
+                                <a class="dropdown-item" href="/item/myitem">Item selling</a>
+                                <a class="dropdown-item" href="/item/soldItem">Previously Sold</a>
+                                <a class="dropdown-item" href="/item/purchased">Previously Purchased</a>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                                {{else}}
+                                <div class="dropdown-item userlogo">
+                                    <img class="user-profile" src="{{base_url}}/img/user.png">
+                                    <a href="/login">SignIn</a> & <a href="/registration">SignUp</a>
+                                </div>
+                                {{/if}}
+
                             </div>
                         </div>
-                        <div class="cart-icon rt-box">
-                            <a href="/item/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="cart-icon rt-box">
-                            <a href="/item/wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="sell-btn">
-                            <a href="/item/additem"><button>Sell</button></a>
-                        </div>
+                    </div>
+                    <div class="cart-icon rt-box">
+                        <a href="/item/cart">{{cart.cartlength}} <i class="fa fa-shopping-cart"
+                                aria-hidden="true"></i></a>
+                    </div>
+                    <div class="cart-icon rt-box">
+                        <a href="/item/wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="sell-btn">
+                        <a href="/item/additem"><button>Sell</button></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
