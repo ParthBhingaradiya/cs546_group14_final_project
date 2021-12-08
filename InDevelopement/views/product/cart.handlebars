@@ -1,95 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Shopping Cart | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="{{base_url}}/js/jquery.min.js"></script>
-
-
-</head>
-
-<body class="loading" data-layout="detached"
-    data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
-    {{> header}}
-    <div class="row cart">
-        <div class="col-lg-8">
-            <div class="table-responsive">
-                <table class="table table-borderless table-centered mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <!-- <th>Quantity</th> -->
-                            <th style="width: 50px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each cartitem}}
-                        <tr>
-                            <td>
-                                <img src="{{base_url}}/img/{{photos}}" alt="contact-img" title="contact-img"
-                                    class="rounded me-3" height="64" />
-                                <p class="m-0 d-inline-block align-middle font-16">
-                                    <a href="apps-ecommerce-products-details.html" class="text-body">{{itemName}}</a>
-                                </p>
-                            </td>
-                            <td>
-                                {{itemPrice}}$
-                            </td>
-                            <!-- <td>
+{{> header}}
+<div class="row cart">
+    <div class="col-lg-8">
+        <div class="table-responsive">
+            <table class="table table-borderless table-centered mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <!-- <th>Quantity</th> -->
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cartitem}}
+                    <tr>
+                        <td>
+                            <img src="{{base_url}}/img/{{photos}}" alt="contact-img" title="contact-img"
+                                class="rounded me-3" height="64" />
+                            <p class="m-0 d-inline-block align-middle font-16">
+                                <a href="apps-ecommerce-products-details.html" class="text-body">{{itemName}}</a>
+                            </p>
+                        </td>
+                        <td>
+                            {{itemPrice}}$
+                        </td>
+                        <!-- <td>
                                                                 <input type="number" min="1" value="5" class="form-control" placeholder="Qty" style="width: 90px;">
                                                             </td> -->
 
-                            <td>
-                                <a href="javascript:void(0);" class="action-icon"> <i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        {{/each}}
+                        <td>
+                            <a href="javascript:void(0);" class="action-icon"> <i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {{/each}}
 
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm-12">
-                <div class="text-sm-end">
-                    <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
-                        Checkout </a>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
-        <div class="col-lg-4">
-            <div class="border p-3 mt-4 mt-lg-0 rounded">
-                <h4 class="header-title mb-3">Order Summary</h4>
-
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <tbody>
-                            <tr>
-                                <td>Grand Total :</td>
-                                <td>{{grandTotal}}$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="col-sm-12">
+            <div class="text-sm-end">
+                <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
+                    Checkout </a>
             </div>
         </div>
     </div>
+    <div class="col-lg-4">
+        <div class="border p-3 mt-4 mt-lg-0 rounded">
+            <h4 class="header-title mb-3">Order Summary</h4>
 
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <td>Grand Total :</td>
+                            <td>{{grandTotal}}$</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-    {{> footer}}
-</body>
-
-</html>
+{{> footer}}

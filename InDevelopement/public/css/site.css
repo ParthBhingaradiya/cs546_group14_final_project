@@ -58,6 +58,23 @@ button.searchButton {
     transform: translateY(-50%);
     left: 8px;
 }
+p.contact {
+    font-size: 15px;
+    font-weight: 900;
+}
+ul.card-text li {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.about-site {
+    margin: 10px;
+    line-height: 30px;
+    background: #f5f3f3;
+    padding: 20px;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
+}
 
 button.searchButton {
     background: black;

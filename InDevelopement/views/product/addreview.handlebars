@@ -1,62 +1,41 @@
-<!DOCTYPE html>
-<html>
+<style>
+    .left-column {
+        text-align: unset;
+    }
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>index</title>
-    <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="{{base_url}}/js/jquery.min.js"></script>
+    .buynow-btn {
+        margin-top: 20px;
+    }
+</style>
 
-    <style>
-        .left-column {
-            text-align: unset;
-        }
-
-        .buynow-btn {
-            margin-top: 20px;
-        }
-    </style>
-</head>
-
-<body>
-    {{> header}}
-    <main class="pro-detail container">
-        <div class="left-column">
-            <div>
-                {{#if getcmt}}
-                <h4>Aleady have review</h4>
-                {{else}}
-                <form action="/item/addreview" method="post">
-                    <!-- Name -->
-                    <input type="hidden" value="{{userid}}" name="userid">
-                    <div class="md-form md-outline">
-                        <label for="form75">Comment</label>
-                        <textarea cols="5" rows="3" type="text" id="form75" name="contetnt" class="form-control pr-6"
-                            required></textarea>
-                    </div>
-                    <!-- address -->
-                    <div class="md-form md-outline">
-                        <label for="form75">Rating</label>
-                        <input type="number" name="rating" id="form75" min="1" max="5" class="form-control pr-6"
-                            required>
-                    </div>
-                    <div class="text-right pb-2">
-                        <input type="submit" value="add review" class="buynow-btn">
-                    </div>
-                </form>
-                {{/if}}
-            </div>
+{{> header}}
+<main class="pro-detail container">
+    <div class="left-column">
+        <div>
+            {{#if getcmt}}
+            <h4>Aleady have review</h4>
+            {{else}}
+            <form action="/item/addreview" method="post">
+                <!-- Name -->
+                <input type="hidden" value="{{userid}}" name="userid">
+                <div class="md-form md-outline">
+                    <label for="form75">Comment</label>
+                    <textarea cols="5" rows="3" type="text" id="form75" name="contetnt" class="form-control pr-6"
+                        required></textarea>
+                </div>
+                <!-- address -->
+                <div class="md-form md-outline">
+                    <label for="form75">Rating</label>
+                    <input type="number" name="rating" id="form75" min="1" max="5" class="form-control pr-6" required>
+                </div>
+                <div class="text-right pb-2">
+                    <input type="submit" value="add review" class="buynow-btn">
+                </div>
+            </form>
+            {{/if}}
         </div>
+    </div>
 
-    </main>
+</main>
 
-    {{> footer}}
-</body>
-
-</html>
+{{> footer}}

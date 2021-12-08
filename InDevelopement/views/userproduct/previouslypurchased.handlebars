@@ -1,71 +1,49 @@
-<!DOCTYPE html>
-<html>
+{{> header}}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>index</title>
-    <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+{{itemName}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-    <script src="{{base_url}}/js/jquery.min.js"></script>
-</head>
-
-<body>
-    {{> header}}
-
-    {{itemName}}
-
-    <div class="product-sec">
-        <div class="container">
-            {{#if itemDatas}}
-            <div class="head">
-                <h1>Products</h1>
-            </div>
-
-            <div class="row">
-
-                {{#each itemDatas}}
-                <div class="pro-box">
-                    <div class="product-grid">
-                        <div class="product-image">
-                            {{!-- <a href="/{{_id}}" class="image"> --}}
-                                {{#if photos.length}}
-                                <img class="img-1" src="{{base_url}}/img/{{photos.[0]}}">
-                                {{else}}
-                                <img class="img-1" src="{{base_url}}/img/noImage.jpg">
-                                {{/if}}
-                                {{!-- </a> --}}
-
-                        </div>
-                        <div class="product-content">
-                            {{!-- <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3> --}}
-                            <h3 class="title"><a href="#">{{itemName}}</a></h3>
-                            <div class="price">${{itemPrice}}</div>
-                        </div>
-
-                        <a href="/item/addreview/?id={{userId}}">Add Review</a>
-                    </div>
-                </div>
-                {{/each}}
-
-
-
-            </div>
-            {{else}}
-            <h1>No data Found</h1>
-            {{/if}}
+<div class="product-sec">
+    <div class="container">
+        {{#if itemDatas}}
+        <div class="head">
+            <h1>Products</h1>
         </div>
 
+        <div class="row">
+
+            {{#each itemDatas}}
+            <div class="pro-box">
+                <div class="product-grid">
+                    <div class="product-image">
+                        {{!-- <a href="/{{_id}}" class="image"> --}}
+                            {{#if photos.length}}
+                            <img class="img-1" src="{{base_url}}/img/{{photos.[0]}}">
+                            {{else}}
+                            <img class="img-1" src="{{base_url}}/img/noImage.jpg">
+                            {{/if}}
+                            {{!-- </a> --}}
+
+                    </div>
+                    <div class="product-content">
+                        {{!-- <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3> --}}
+                        <h3 class="title"><a href="#">{{itemName}}</a></h3>
+                        <div class="price">${{itemPrice}}</div>
+                    </div>
+
+                    <a href="/item/addreview/?id={{userId}}">Add Review</a>
+                </div>
+            </div>
+            {{/each}}
+
+
+
+        </div>
+        {{else}}
+        <h1>No data Found</h1>
+        {{/if}}
     </div>
 
+</div>
 
-    {{> footer}}
-</body>
 
-</html>
+{{> footer}}
