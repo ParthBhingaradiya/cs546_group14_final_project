@@ -36,7 +36,7 @@
                         <div class="product-image">
                             {{!-- <a href="/{{_id}}" class="image"> --}}
                                 {{#if photos.length}}
-                                <img class="img-1" src="{{base_url}}/img/{{photos}}">
+                                <img class="img-1" src="{{base_url}}/img/{{photos.[0]}}">
                                 {{else}}
                                 <img class="img-1" src="{{base_url}}/img/noImage.jpg">
                                 {{/if}}

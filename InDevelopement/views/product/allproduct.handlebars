@@ -35,12 +35,11 @@
                         <div class="product-image">
                             <a href="/singleitem/{{_id}}" class="image">
                                 {{#if photos.length}}
-                                <img class="img-1" src="{{base_url}}/img/{{photos}}">
+                                <img class="img-1" src="{{base_url}}/img/{{photos.[0]}}">
                                 {{else}}
                                 <img class="img-1" src="{{base_url}}/img/noImage.jpg">
                                 {{/if}}
                             </a>
-
                         </div>
                         <div class="product-content">
                             <h3 class="title"><a href="/singleitem/{{_id}}">{{itemName}}</a></h3>

@@ -21,11 +21,28 @@
    <main class="pro-detail container">
       <!-- Left Column / Headphones Image -->
       <div class="left-column">
-         {{#if itemDatas.photos}}
-         <img data-image="red" class="active single-img" src="{{base_url}}/img/{{itemDatas.photos}}" alt="">
+         {{!-- <div class="col-lg-5"> --}}
+            <!-- Product image -->
+            <a href="javascript: void(0);" class="text-center d-block mb-9">
+               <img src="{{base_url}}/img/{{itemDatas.photos.[0]}}" class="img-fluid"
+                  style="max-width: 500px;margin-bottom: 10px;" alt="Product-img">
+            </a>
+
+            <div class="d-lg-flex d-none justify-content-center">
+               {{#each itemDatas.photos}}
+               <a href="javascript: void(0);">
+                  <img src="{{base_url}}/img/{{this}}" class="img-fluid img-thumbnail p-2" style="max-width: 150px;"
+                     alt="Product-img">
+               </a>
+               {{/each}}
+            </div>
+            {{!--
+         </div> --}}
+         {{!-- {{#if itemDatas.photos}}
+         <img data-image="red" class="active single-img" src="{{base_url}}/img/{{itemDatas.photos.[0]}}" alt="">
          {{else}}
          <img class="img-1 single-img" src="{{base_url}}/img/noImage.jpg">
-         {{/if}}
+         {{/if}} --}}
       </div>
       <!-- Right Column -->
       <div class="right-column">
@@ -50,6 +67,7 @@
          </div>
       </div>
    </main>
+
    {{> footer}}
 </body>
 
