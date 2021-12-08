@@ -165,7 +165,12 @@ router.get("/review", async (req, res) => {
         let id = req.query.id;
         let name = req.query.name;
         const getcmt = await comments.getUserComment(id);
-        res.render(`product/itemreview`, { user: req.session.userauth, getcmt: getcmt, name: name });
+        let avgrate = 0;
+        getcmt.forEach((datas) => {
+            avgrate = Number(datas.rating) + avgrate;
+        })
+        let avgnumber = Number(avgrate / getcmt.length);
+        res.render(`product/itemreview`, { user: req.session.userauth, getcmt: getcmt, name: name, avgnumber: avgnumber });
     } else {
         res.redirect('/login')
     }
