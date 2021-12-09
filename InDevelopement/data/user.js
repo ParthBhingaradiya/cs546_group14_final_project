@@ -552,6 +552,56 @@ async function deleteItemfromWishlist(userid, itemId)
     }
     return "Added";   
 }
+//Adds comments and then change rating
+async function commentaddition(userId,commentId){
+    if (typeof userId != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemId != "string")
+    {
+        throw "Error: was not given the right Id type for the item"
+    }
+    const user1 = await getSingleUser(userId);
+    let commentList = user1.commentSeller;
+    commentList.push(commentId);
+    let parseId;
+    try {
+        parseId = ObjectId(userId);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    let overall=0;
+    for(const i of commentList)
+    {
+        overall +=i.rating
+    }
+    overall= overall/(commentList.length)
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: commentList,
+        cart: user1.cart,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";   
+
+}
 module.exports = {
     createUser,//yes
     checkUser,//yes
@@ -566,6 +616,7 @@ module.exports = {
     showPreviousSoldItem,//yes
     addPurchaseSingleItem,//nope
     deleteItemfromCart,//yes
-    deleteItemfromWishlist//yes
+    deleteItemfromWishlist,//yes
+    commentaddition
 
 };
