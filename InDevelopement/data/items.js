@@ -1,6 +1,8 @@
 const { ObjectId } = require("bson");
 const mongoCollections = require("../config/mongoCollections");
 const items = mongoCollections.items;
+const data = require('../data');
+const userData= data.user;
 //Given item values it will create an item and post it to the 
 /*
 Questions:
@@ -24,11 +26,23 @@ async function createItem(itemName, itemDescription, status, userId, itemPrice, 
     }
     //check using userId
     ////////////////////////////////////////////////////check if userid exists later on
+
     if (typeof userId != "string") {
         throw "Error: userId was not given or different type."
     }
+    try{
+        await userData.getSingleUser(userId);
+    }
+    catch(e)
+    {
+        throw "Error: user does not exist while adding item"
+    }
     if (typeof itemPrice != "number") {
         throw "Error: Item price was not goven or different type."
+    }
+    if(itemPrice<0)
+    {
+        throw "Error: Price for the item cannot be a negative number."
     }
     if (!(Array.isArray(commentId))) {
         throw "Error: comment Ids is supoosed to have."
