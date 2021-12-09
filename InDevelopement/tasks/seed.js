@@ -120,15 +120,15 @@ async function main() {
     await items.boughtItem(item21id);
     //let showCartItem= await users.showCartItem(fifthid);
     //console.log("Hey200000");
-    let wishItem = await users.addToWishlistitem(secondid,item20id);
+    /*let wishItem = await users.addToWishlistitem(secondid,item20id);
     let wishlist = await users.showWishlistItem(secondid);
     let addUserPrevSold = await users.adduserPrevSold(thirdid,item12id);
     let showUserPrevSold = await users.showPreviousSoldItem(thirdid);
-    //let addPurchaseSingleItem = await users.addPurchaseSingleItem(firstid,item5id);
+    let addPurchaseSingleItem = await users.addPurchaseSingleItem(firstid,item5id);
     let addcartItem3 = await users.addToCartitem(seventhid,item19id);
     let addcartItem4 = await users.addToCartitem(seventhid,item17id);
     let deleteCartItem = await users.deleteItemfromCart(seventhid,item19id);
-    let deleteWishList = await users.deleteItemfromWishlist(secondid,item20id);
+    let deleteWishList = await users.deleteItemfromWishlist(secondid,item20id);*/
 
 
 
