@@ -217,12 +217,12 @@ async function showCartItem(userid){
     }
     const user = await getSingleUser(userid);
     let i = [];
-    for (const i of user.cart)
+    for (const f of user.cart)
     {
-        let item = itemData.findItem(i)
+        let item = itemData.findItem(f)
         if(item["status"]==="Open")
         {
-            i.push(i._id);
+            i.push(f._id);
         }
     }
     return i;
