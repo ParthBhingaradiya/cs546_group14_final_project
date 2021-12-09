@@ -9,6 +9,21 @@
     color: #9DBFAF;
 }
 
+h5.add-to-wish:hover {
+    color: #000;
+}
+
+h5.add-to-wish {
+    width: 33%;
+    background: antiquewhite;
+    padding: 5px;
+    color: #6e6e6e;
+}
+
+h5.add-to-wish {
+    cursor: pointer;
+}
+
 img.user-profile {
     width: 50px;
 }

@@ -13,31 +13,31 @@
                     </tr>
                 </thead>
                 <tbody>
+                     {{#each wishlistitem}}
                     <tr>
                         <td>
-                            <img src="{{base_url}}/img/noImage.jpg" alt="contact-img" title="contact-img"
+                            <img src="{{base_url}}/img/{{photos.[0]}}" alt="contact-img" title="contact-img"
                                 class="rounded me-3" height="64" />
                             <p class="m-0 d-inline-block align-middle font-16">
-                                <a href="apps-ecommerce-products-details.html" class="text-body">Amazing Modern
-                                    Chair</a>
+                                <a href="apps-ecommerce-products-details.html" class="text-body">{{itemName}}</a>
                             </p>
                         </td>
                         <td>
-                            $148.66
+                             {{itemPrice}}$
                         </td>
                         <!-- <td>
                                                                 <input type="number" min="1" value="5" class="form-control" placeholder="Qty" style="width: 90px;">
                                                             </td> -->
 
                         <td>
-                            <a href="javascript:void(0);" class="action-icon"> <i class="fa fa-trash"></i></a>
+                            <a href="/item/removewishlist?id={{_id}}" class="action-icon"> <i class="fa fa-trash"></i></a>
                         </td>
                         <td>
-                            <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
+                            <a href="/item/addtocart?id={{_id}}" class="btn btn-danger">
                                 Add to Cart </a>
                         </td>
                     </tr>
-
+ {{/each}}
                 </tbody>
             </table>
         </div>

@@ -37,7 +37,8 @@
          <h1>{{itemDatas.itemName}}</h1>
          <p>{{itemDatas.itemDescription}}</p>
       </div>
-
+   {{!-- <h5><a href="/item/addwishlist?id={{itemDatas._id}}">Add To Wishlist</a></h5> --}}
+   <h5 class="add-to-wish">Add To Wishlist</h5>
       <!-- Product Pricing -->
       <div class="product-price">
          <span>{{itemDatas.itemPrice}}$</span>
@@ -56,5 +57,15 @@
      var src2 = $('.main-img').attr('src')
       $('.main-img').attr('src',src1)
       $(this).attr(src2)
+   })
+
+   $('.add-to-wish').click(function(){
+      $.ajax({
+         url: `/item/addwishlistajax?id={{itemDatas._id}}`, 
+         method:'get',
+         success: function(result) {
+            $('.wish-url').html(`${result}<i class="fa fa-heart" aria-hidden="true"></i>`)
+            console.log(result)
+            }});
    })
 </script>
