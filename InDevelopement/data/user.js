@@ -242,9 +242,9 @@ async function addPurchaseItem(userid){
     const user1 = await getSingleUser(userid);
     for(const i of user1.cart)
     {
-        itemData.boughtItem(i);
-        item =itemData.findItem(i);
-        itemData.adduserPrevSold(item.userId,i);
+        await itemData.boughtItem(i);
+        item =await itemData.findItem(i);
+        await itemData.adduserPrevSold(item.userId,i);
     }
     const newlist = user1.prevPurchase;
     //newlist.push(itemid);
