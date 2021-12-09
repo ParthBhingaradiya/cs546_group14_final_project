@@ -14,6 +14,10 @@ async function createUser(firstName, lastName, email, address, city, pincode, st
 
     if (typeof age != 'number')
         throw ("age should be a number");
+    if(age<13&&age>140)
+    {
+        throw "Error: age cannot be too low or too high"
+    }
 
     if (typeof firstName != 'string' || typeof lastName != 'string' || typeof email != 'string' || typeof address != 'string' || typeof city != 'string' || typeof pincode != 'string' || typeof state != 'string' || typeof accountPassword != 'string')
         throw ("One or more user information is of wrong type. Enter again.");
