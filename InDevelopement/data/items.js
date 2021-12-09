@@ -1,6 +1,6 @@
 const { ObjectId } = require("bson");
 const mongoCollections = require("../config/mongoCollections");
-const userData = require("./user.js");
+//const userData = require("./user.js");
 const items = mongoCollections.items;
 const users = require("./user");
 //Given item values it will create an item and post it to the 
