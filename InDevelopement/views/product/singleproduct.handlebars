@@ -4,8 +4,8 @@
    <div class="left-column">
       {{!-- <div class="col-lg-5"> --}}
          <!-- Product image -->
-         <a href="javascript: void(0);" class="text-center d-block mb-9">
-            <img src="{{base_url}}/img/{{itemDatas.photos.[0]}}" class="img-fluid"
+         <a href="javascript: void(0);" class="text-center d-block mb-9 first-img">
+            <img src="{{base_url}}/img/{{itemDatas.photos.[0]}}" class="img-fluid main-img"
                style="max-width: 500px;margin-bottom: 10px;" alt="Product-img">
          </a>
 
@@ -50,3 +50,11 @@
 </main>
 
 {{> footer}}
+<script>
+   $('.p-2').click(function(){
+     var src1 = $(this).attr('src')
+     var src2 = $('.main-img').attr('src')
+      $('.main-img').attr('src',src1)
+      $(this).attr(src2)
+   })
+</script>

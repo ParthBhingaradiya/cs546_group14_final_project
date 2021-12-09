@@ -4,7 +4,7 @@ const data = require('../data');
 const users = data.users;
 const items = data.items;
 
-router.get("/", async (req, res) => {
+router.get("/", async(req, res) => {
     let itemData = await items.getItemList();
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
     res.render(`product/allproduct`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem });
 })
 
-router.post("/", async (req, res) => {
+router.post("/", async(req, res) => {
     try {
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.get("/singleitem/:id", async (req, res) => {
+router.get("/singleitem/:id", async(req, res) => {
     let id = req.params.id;
     let itemData = await items.findItem(id);
     let userData = await users.getSingleUser(itemData.userId)
@@ -43,12 +43,14 @@ router.get("/singleitem/:id", async (req, res) => {
 })
 
 
-router.get("/about", async (req, res) => {
+router.get("/about", async(req, res) => {
     res.render(`userproduct/about`, { user: req.session.userauth, cart: req.session.cartitem });
 })
 
-router.get("/profile", async (req, res) => {
-    res.render(`userproduct/profile`, { user: req.session.userauth, cart: req.session.cartitem });
+router.get("/profile", async(req, res) => {
+    let userId = req.session.userauth.user_id
+    let userData = await users.getSingleUser(userId)
+    res.render(`userproduct/profile`, { user: req.session.userauth, cart: req.session.cartitem, userData: userData });
 })
 
 module.exports = router;

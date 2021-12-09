@@ -96,9 +96,21 @@ button.searchButton {
     margin-left: 10px;
 }
 
+.main-img {
+    height: 500px !important;
+}
+
 .header {
     background-color: #00000014;
     padding: 15px 0px;
+}
+
+label.errormsg {
+    padding: 10px;
+    border: 1px solid;
+    margin: 10px;
+    color: red;
+    background: #ffeaea;
 }
 
 .logo {

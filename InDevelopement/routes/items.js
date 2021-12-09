@@ -6,6 +6,7 @@ const users = data.users;
 const comments = data.comments;
 const path = require('path');
 const multer = require('multer');
+const { checkUser } = require('../data/user');
 /////////////////////////////////////////Gets list of items.
 
 const storage = multer.diskStorage({
@@ -30,23 +31,32 @@ router.get("/additem", async(req, res) => {
 
 router.post("/additem", upload.array('uploaded_file'), async(req, res) => {
     if (req.session.userauth) {
-
         try {
             let itemName = req.body.itemName;
+            console.log('itemName', itemName)
             let description = req.body.description;
+            console.log("description", description)
+
             let status = req.body.status;
+            console.log('status', status)
+
             let itemPrice = Number(req.body.itemPrice);
-            let photos = req.files.uploaded_file;
+            console.log('itemPrice', itemPrice)
+
             let userId = req.session.userauth.user_id;
+            console.log('userId', userId)
+
             let fileName = req.files.map((f_name) => {
                 return f_name.originalname
             })
+            console.log('fileName', fileName)
+
             let commentId = []
             const additem = await items.createItem(itemName, description, status, userId, itemPrice, commentId, fileName)
             res.redirect(`/`);
         } catch (e) {
-            console.log(e, 'test');
-            res.redirect(`/additem`, { err: e });
+            console.log(e);
+            res.redirect(`/item/additem`, { err: e });
         }
     } else {
         res.redirect('/login')
@@ -81,17 +91,21 @@ router.get("/checkout", async(req, res) => {
 
 router.post("/thankyou", async(req, res) => {
     if (req.session.userauth) {
-        let id = req.body.id;
+
         let userId = req.session.userauth.user_id
-        let name = req.body.name;
-        let address = req.body.address;
-        let phone_no = req.body.phone_no;
-        let email = req.body.email;
-        let card_name = req.body.card_name;
-        let cvv = req.body.cvv;
-        let expiry_date = req.body.expiry_date;
-        let priviouspurchage = await users.addPurchaseItem(userId, id);
-        let itemData = await items.boughtItem(id);
+        let id = '';
+        let priviouspurchage, itemData;
+        if (req.body.id) {
+            id = req.body.id;
+            priviouspurchage = await users.addPurchaseItem(userId, id);
+            itemData = await items.boughtItem(id);
+        } else {
+            id = await users.showCartItem(userId)
+            priviouspurchage = await users.addMultiplePurchaseItem(userId, id);
+            id.map(async(itemIds) => {
+                itemData = await items.boughtItem(itemIds.toString());
+            })
+        }
         res.render(`product/thankyou`, { user: req.session.userauth, cart: req.session.cartitem });
     } else {
         res.redirect('/login')
@@ -113,7 +127,7 @@ router.get("/purchased", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id;
         let itemData = await users.showPreviousPurchaseItem(userId);
-        const itemDatas = await items.findaddTocartItem(itemData)
+        const itemDatas = await items.getpurchageItem(itemData)
         const getcmt = await comments.getUserComment(userId);
         res.render(`userproduct/previouslypurchased`, { user: req.session.userauth, itemDatas: itemDatas, cart: req.session.cartitem, getcmt: getcmt });
     } else {
@@ -123,7 +137,6 @@ router.get("/purchased", async(req, res) => {
 })
 router.get("/cart", async(req, res) => {
     if (req.session.userauth) {
-
         let userId = req.session.userauth.user_id
         const viewCart = await users.showCartItem(userId)
         const cartitem = await items.findaddTocartItem(viewCart)
@@ -132,11 +145,12 @@ router.get("/cart", async(req, res) => {
         cartitem.forEach((sumprice) => {
             sum = sumprice.itemPrice + sum;
         })
-        res.render(`product/cart`, { user: req.session.userauth, cart: req.session.cartitem, grandTotal: sum, cart: req.session.cartitem, cartitem: cartitem });
+        res.render(`product/cart`, { user: req.session.userauth, grandTotal: sum, cart: req.session.cartitem, cartitem: cartitem });
     } else {
         res.redirect('/login')
     }
 })
+
 
 router.get("/addtocart", async(req, res) => {
     if (req.session.userauth) {
@@ -152,8 +166,10 @@ router.get("/addtocart", async(req, res) => {
 router.get("/addreview", async(req, res) => {
     if (req.session.userauth) {
         let user_id = req.query.id;
-        const getcmt = await comments.getUserComment(user_id);
-        res.render(`product/addreview`, { user: req.session.userauth, userid: user_id, getcmt: getcmt.length });
+        let item_id = req.query.itemid;
+        const checkcmt = await items.checkCmtOrnot(item_id);
+        const getcmt = await comments.getItemCmt(checkcmt.commentIds)
+        res.render(`product/addreview`, { user: req.session.userauth, userid: user_id, item_id: item_id, getcmt: getcmt.length });
     } else {
         res.redirect('/login')
     }
@@ -162,9 +178,11 @@ router.get("/addreview", async(req, res) => {
 router.post("/addreview", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.body.userid;
+        let itemId = req.body.itemid;
         let content = req.body.contetnt;
         let rating = req.body.rating;
         const addcmt = await comments.createComment(userId, content, rating);
+        const addcmtonItem = items.addCommentToItem(addcmt._id.toString(), itemId)
         res.redirect('/item/purchased')
     } else {
         res.redirect('/login')
