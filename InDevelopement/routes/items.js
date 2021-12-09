@@ -159,7 +159,7 @@ router.get("/addtocart", async(req, res) => {
     if (req.session.userauth) {
         let id = req.query.id;
         let userId = req.session.userauth.user_id
-            // const removewishitem = await users.removeToWishlistitem(userId, id)
+        const removewishitem = await users.removeToWishlistitem(userId, id)
         const addtocart = await users.addToCartitem(userId, id)
         res.redirect('/item/cart')
     } else {
@@ -257,5 +257,15 @@ router.get("/removewishlist", async(req, res) => {
     }
 })
 
+router.get("/removecartlist", async(req, res) => {
+    if (req.session.userauth) {
+        let id = req.query.id;
+        let userId = req.session.userauth.user_id
+        const removewishItem = await users.removeToCartItem(userId, id)
+        res.redirect('/item/cart')
+    } else {
+        res.redirect('/login')
+    }
+})
 
 module.exports = router;

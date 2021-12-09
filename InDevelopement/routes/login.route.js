@@ -8,11 +8,11 @@ const users = data.users;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.get("/login", async (req, res) => {
+router.get("/login", async(req, res) => {
     res.render(`login/login`);
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", async(req, res) => {
     try {
         let email = req.body.username;
         let accountPassword = req.body.password;
@@ -27,11 +27,11 @@ router.post("/login", async (req, res) => {
 })
 
 
-router.get("/registration", async (req, res) => {
+router.get("/registration", async(req, res) => {
     res.render(`login/registration`);
 })
 
-router.post("/registration", async (req, res) => {
+router.post("/registration", async(req, res) => {
     try {
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
@@ -41,8 +41,9 @@ router.post("/registration", async (req, res) => {
         let pincode = req.body.pincode;
         let state = req.body.state;
         let accountPassword = req.body.password;
+        let cm_password = req.body.cmpassword;
         let age = Number(req.body.age);
-        await users.createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age);
+        await users.createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age, cm_password);
         res.redirect(`/`);
     } catch (e) {
         console.log(e, 'test');
@@ -50,8 +51,8 @@ router.post("/registration", async (req, res) => {
     }
 })
 
-router.get('/logout', async (req, res) => {
-    req.session.destroy(function (err) {
+router.get('/logout', async(req, res) => {
+    req.session.destroy(function(err) {
         console.log(err)
     })
     res.redirect('/');

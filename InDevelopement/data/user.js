@@ -6,7 +6,7 @@ const saltRounds = 16;
 
 //to create a new user
 //sign-up functionality
-async function createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age) {
+async function createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age, cm_password) {
     if (!firstName || !lastName || !email || !address || !city || !state || !pincode || !accountPassword || !age)
         throw ("One or more user details are missing. Enter again");
 
@@ -36,7 +36,7 @@ async function createUser(firstName, lastName, email, address, city, pincode, st
 
     if (accountPassword.length < 6)
         throw ("password should be at-least 6 characters long");
-
+    if (cm_password != accountPassword) throw ("password should be not match");
     if (!accountPassword.trim().length || accountPassword.trim().length < accountPassword.length)
         throw ("password should not contain empty spaces");
 
@@ -368,6 +368,54 @@ async function removeToWishlistitem(userid, itemid) {
     }
     const user1 = await getSingleUser(userid);
     const newlist = user1.wishlist;
+
+    const customarray = [];
+    newlist.forEach((dd) => {
+        if (dd.toString() != itemid) {
+            customarray.push(ObjectId(dd));
+        }
+    })
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase: user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: customarray
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+
+    return "Added";
+}
+
+
+async function removeToCartItem(userid, itemid) {
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemid != "string") {
+        throw "Error: was not given the right ID for the item"
+    }
+    const user1 = await getSingleUser(userid);
+    const newlist = user1.cart;
     const customarray = [];
     newlist.forEach((dd) => {
         if (dd.toString() != itemid) {
@@ -394,8 +442,8 @@ async function removeToWishlistitem(userid, itemid) {
         prevPurchase: user1.prevPurchase,
         prevSold: user1.prevSold,
         commentSeller: user1.commentSeller,
-        cart: user1.cart,
-        wishlist: customarray
+        cart: customarray,
+        wishlist: user1.wishlist
     }
     const userCollection = await user();
 
@@ -405,7 +453,6 @@ async function removeToWishlistitem(userid, itemid) {
     }
     return "Added";
 }
-
 
 module.exports = {
     createUser,
@@ -419,5 +466,6 @@ module.exports = {
     showPreviousPurchaseItem,
     addToCmt,
     addMultiplePurchaseItem,
-    removeToWishlistitem
+    removeToWishlistitem,
+    removeToCartItem
 };
