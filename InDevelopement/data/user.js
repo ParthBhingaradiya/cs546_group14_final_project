@@ -1,4 +1,6 @@
 const collection = require('../config/mongoCollections');
+const data = require('../data');
+const itemData= data.items;
 const user = collection.users;
 let { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
@@ -139,7 +141,7 @@ async function addToCartitem(userid, itemid){
     const doc = {
         firstName: user1.firstName,
         lastName: user1.lastName,
-        email: user.email,
+        email: user1.email,
         address: user1.address,
         city: user1.city,
         pincode: user1.pincode,
@@ -181,7 +183,7 @@ async function addToWishlistitem(userid, itemid){
     const doc = {
         firstName: user1.firstName,
         lastName: user1.lastName,
-        email: user.email,
+        email: user1.email,
         address: user1.address,
         city: user1.city,
         pincode: user1.pincode,
@@ -210,7 +212,16 @@ async function showCartItem(userid){
         throw "Error: was not given the right ID for the user"
     }
     const user = await getSingleUser(userid);
-    return user.cart;
+    let i = [];
+    for (const i of user.cart)
+    {
+        let item = itemData.findItem(i)
+        if(item["status"]==="Open")
+        {
+            i.push(i._id);
+        }
+    }
+    return i;
 }
 
 //It will return array of item ids
@@ -221,18 +232,23 @@ async function showWishlistItem(userid){
     const user = await getSingleUser(userid);
     return user.wishlist;
 }
-
+/////////////////////////////Should i call item buy item here or should i do it with a cart so you would'nt have to call it multiple times 
 //Call this function while user purchase some items, we are adding item id to prevPurchase array
-async function addPurchaseItem(userid, itemid){
+async function addPurchaseItem(userid){
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
     }
-    if (typeof itemid != "string") {
-        throw "Error: was not given the right ID for the item"
-    }
+    
     const user1 = await getSingleUser(userid);
+    for(const i of user1.cart)
+    {
+        itemData.boughtItem(i);
+        item =itemData.findItem(i);
+        itemData.adduserPrevSold(item.userId,i);
+    }
     const newlist = user1.prevPurchase;
-    newlist.push(itemid);
+    //newlist.push(itemid);
+    let newPrev = newlist.concat(user1.cart);
     let parseId;
     try {
         parseId = ObjectId(userid);
@@ -242,7 +258,7 @@ async function addPurchaseItem(userid, itemid){
     const doc = {
         firstName: user1.firstName,
         lastName: user1.lastName,
-        email: user.email,
+        email: user1.email,
         address: user1.address,
         city: user1.city,
         pincode: user1.pincode,
@@ -250,10 +266,10 @@ async function addPurchaseItem(userid, itemid){
         accountPassword: user1.accountPassword,
         age: user1.age,
         avgRating: user1.avgRating,
-        prevPurchase:newlist,
+        prevPurchase:newPrev,
         prevSold: user1.prevSold,
         commentSeller: user1.commentSeller,
-        cart: user1.cart,
+        cart: [],
         wishlist: user1.wishlist
     }
     const userCollection = await user();
@@ -272,6 +288,72 @@ async function showPreviousPurchaseItem(userid){
     const user = await getSingleUser(userid);
     return user.prevPurchase;
 }
+async function showPreviousSoldItem(userid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    const user = await getSingleUser(userid);
+    return user.prevSold;
+}
+async function adduserPrevSold(userId,itemId)
+{
+    if(typeof userId != "string")
+    {
+        throw "Error: type of user id is not string or not given as a userprev sold"
+    }
+    if(typeof itemId != "string")
+    {
+        throw "Error: type of item id is not string or not given as a userprev sold"
+    }
+    const user1 = await getSingleUser(userid);
+    let newPrevSold = user.prevSold;
+    newPrevSold.push(itemId);
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: newPrevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: user1.wishlist
+    }
+
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";
+    
+}
+/*async function deleteItemfromCart(userid, itemId)
+{
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemId != "string")
+    {
+        throw "Error: was not given the right Id type for the item"
+    }
+    const user1 = await getSingleUser(userid);
+    
+    
+}*/
 module.exports = {
     createUser,
     checkUser,
@@ -281,5 +363,8 @@ module.exports = {
     showCartItem,
     showWishlistItem,
     addPurchaseItem,
-    showPreviousPurchaseItem
+    showPreviousPurchaseItem,
+    adduserPrevSold,
+    showPreviousSoldItem
+
 };
