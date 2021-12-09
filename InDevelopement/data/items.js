@@ -227,11 +227,18 @@ async function findUserItem(user_id) {
         throw "Error: Confirmation if the id was valid error."
     }
     const itemsCollection = await items();
+    let itemList = [];
     const findInfo = await itemsCollection.find({ userId: user_id }).toArray()
-    if (findInfo == null) {
+    for (const i of findInfo) {
+        if (i["status"] == "Open") {
+            itemList.push(i);
+            i["_id"] = i["_id"].toString();
+        }
+    }
+    if (itemList == null) {
         throw "No item with that id."
     } else {
-        return findInfo;
+        return itemList;
     }
 }
 
