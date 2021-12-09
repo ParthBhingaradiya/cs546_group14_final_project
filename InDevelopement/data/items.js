@@ -1,16 +1,10 @@
 const { ObjectId } = require("bson");
 const mongoCollections = require("../config/mongoCollections");
+const userData = require("./user.js");
 const items = mongoCollections.items;
-const data = require('../data');
-const userData= data.user;
-//Given item values it will create an item and post it to the 
-/*
-Questions:
-1. Is it better to change ids to string or straight up ids.
-2. Does the ids 
-Remember:
-1. Trim the inputs.
-*/
+
+
+
 async function createItem(itemName, itemDescription, status, userId, itemPrice, commentId, photos) {
     if (typeof itemName != "string") {
         throw "Error: Item name was not given or wrong type";

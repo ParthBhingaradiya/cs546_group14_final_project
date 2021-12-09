@@ -1,11 +1,18 @@
 const collection = require('../config/mongoCollections');
-const data = require('../data');
-const itemData= data.items;
+const itemData = require('./items.js');
 const user = collection.users;
 let { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
-const saltRounds = 16;
+const saltRounds = 1;//////////////////////////////Change back to 16 later on
 
+/*
+Error trying to find itemData so could not test the following:
+1. Error checking if the item exist in addCartitem
+2.cannot test showCart item part where if it checks if status is open.
+3. cannot test addpurchase item because it changes item to "sold"
+4. Can't test prev sold or prev purhcase because apppurchase didnt work
+5. add check so i can delete sold item in a wish item
+*/
 //to create a new user
 //sign-up functionality
 async function createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age) {
@@ -120,19 +127,34 @@ async function checkUser(email, accountPassword) {
 }
 
 async function getSingleUser(userid) {
+    if(typeof userid !=="string")
+    {
+        throw "Error: The user id given is not a valid user id."
+    }
     parseId = ObjectId(userid);
     const userCollection = await user();
     const found = await userCollection.findOne({ _id: parseId });
+    if(!found)
+    {
+        throw "Error: The user cannot be found."
+    }
     return found
 }
 
 async function addToCartitem(userid, itemid){
     if (typeof userid != "string") {
-        throw "Error: was not given the right ID for the user"
+        throw "Error: was not given the right ID for the user."
     }
     if (typeof itemid != "string") {
-        throw "Error: was not given the right ID for the item"
+        throw "Error: was not given the right ID for the item."
     }
+    /*try{
+        let p = await itemData.findItem(itemid);
+    }
+    catch(e)
+    {
+        throw "Error: Item does not exist."
+    }*/
     const user1 = await getSingleUser(userid);
     const newlist = user1.cart;
     newlist.push(itemid);
@@ -167,7 +189,7 @@ async function addToCartitem(userid, itemid){
     }
     return "Added";
 }
-
+//Could check for if item exists
 async function addToWishlistitem(userid, itemid){
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
@@ -219,11 +241,54 @@ async function showCartItem(userid){
     let i = [];
     for (const f of user.cart)
     {
-        let item = itemData.findItem(f)
+        let item = await itemData.findItem(f);
         if(item["status"]==="Open")
         {
             i.push(f._id);
         }
+    }
+    if(i.length<user.cart.length)
+    {
+        let newcart =[];
+        for(const item of user.cart)
+        {
+            if(item["status"]==="Open")
+            {
+                newcart.push(item);
+            }
+        }
+        let parseId;
+        try {
+            parseId = ObjectId(userid);
+        } catch (e) {
+            "Error: item id could not be converted into object id."
+        }
+        const doc = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            address: user.address,
+            city: user.city,
+            pincode: user.pincode,
+            state: user.state,
+            accountPassword: user.accountPassword,
+            age: user.age,
+            avgRating: user.avgRating,
+            prevPurchase:user.prevPurchase,
+            prevSold: user.prevSold,
+            commentSeller: user.commentSeller,
+            cart: newcart,
+            wishlist: user.wishlist
+        }
+        const userCollection = await user();
+
+        const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+        if (updatedInfo.modifiedCount == 0) {
+            throw "Error: Could not update anything."
+        }
+
+
+
     }
     return i;
 }
@@ -247,8 +312,8 @@ async function addPurchaseItem(userid){
     for(const i of user1.cart)
     {
         await itemData.boughtItem(i);
-        item =await itemData.findItem(i);
-        await itemData.adduserPrevSold(item.userId,i);
+        let item = await itemData.findItem(i)
+        await adduserPrevSold(item.userId.toString(),i);
     }
     const newlist = user1.prevPurchase;
     //newlist.push(itemid);
@@ -284,6 +349,50 @@ async function addPurchaseItem(userid){
     }
     return "Added";
 }
+////////////////////////////The buy now option of buying a singular item
+async function addPurchaseSingleItem(userid,itemid){
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    
+    const user1 = await getSingleUser(userid);
+    const item = await itemData.findItem(itemid);
+    await itemData.boughtItem(itemid);
+    await adduserPrevSold(item.userId,itemid);
+    const newlist = user1.prevPurchase;
+    //newlist.push(itemid);
+    let newPrev = newlist.push(itemid);
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:newPrev,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";
+}
 //It will return array of item ids of previous puschase item
 async function showPreviousPurchaseItem(userid){
     if (typeof userid != "string") {
@@ -299,9 +408,9 @@ async function showPreviousSoldItem(userid){
     const user = await getSingleUser(userid);
     return user.prevSold;
 }
-async function adduserPrevSold(userId,itemId)
+async function adduserPrevSold(userid,itemId)
 {
-    if(typeof userId != "string")
+    if(typeof userid != "string")
     {
         throw "Error: type of user id is not string or not given as a userprev sold"
     }
@@ -310,7 +419,7 @@ async function adduserPrevSold(userId,itemId)
         throw "Error: type of item id is not string or not given as a userprev sold"
     }
     const user1 = await getSingleUser(userid);
-    let newPrevSold = user.prevSold;
+    let newPrevSold = user1.prevSold;
     newPrevSold.push(itemId);
     let parseId;
     try {
@@ -345,7 +454,7 @@ async function adduserPrevSold(userId,itemId)
     return "Added";
     
 }
-/*async function deleteItemfromCart(userid, itemId)
+async function deleteItemfromCart(userid, itemId)
 {
     if (typeof userid != "string") {
         throw "Error: was not given the right ID for the user"
@@ -355,20 +464,108 @@ async function adduserPrevSold(userId,itemId)
         throw "Error: was not given the right Id type for the item"
     }
     const user1 = await getSingleUser(userid);
-    
-    
-}*/
+    let newcart = [];
+    for(const i of user1.cart)
+    {
+        if(i!==itemId)
+        {
+            newcart.push(i);
+        }
+    }
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: newcart,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";   
+}
+async function deleteItemfromWishlist(userid, itemId)
+{
+    if (typeof userid != "string") {
+        throw "Error: was not given the right ID for the user"
+    }
+    if (typeof itemId != "string")
+    {
+        throw "Error: was not given the right Id type for the item"
+    }
+    const user1 = await getSingleUser(userid);
+    let newWishlist = [];
+    for(const i of user1.wishlist)
+    {
+        if(i!==itemId)
+        {
+            newWishlist.push(i);
+        }
+    }
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase:user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: newWishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";   
+}
 module.exports = {
-    createUser,
-    checkUser,
-    getSingleUser,
-    addToCartitem,
-    addToWishlistitem,
-    showCartItem,
-    showWishlistItem,
-    addPurchaseItem,
-    showPreviousPurchaseItem,
-    adduserPrevSold,
-    showPreviousSoldItem
+    createUser,//yes
+    checkUser,//yes
+    getSingleUser,//yes
+    addToCartitem,//yes
+    addToWishlistitem,//yes
+    showCartItem,//nope
+    showWishlistItem,//nope
+    addPurchaseItem,//nope
+    showPreviousPurchaseItem,//nope
+    adduserPrevSold,//yes
+    showPreviousSoldItem,//yes
+    addPurchaseSingleItem,//nope
+    deleteItemfromCart,//yes
+    deleteItemfromWishlist//yes
 
 };
