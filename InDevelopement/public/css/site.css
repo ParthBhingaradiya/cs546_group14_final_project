@@ -58,15 +58,16 @@ button.searchButton {
     transform: translateY(-50%);
     left: 8px;
 }
+
 p.contact {
     font-size: 15px;
     font-weight: 900;
 }
+
 ul.card-text li {
     font-size: 19px;
     font-weight: 900;
 }
-
 
 .about-site td {
     padding: 10px;
@@ -89,6 +90,10 @@ button.searchButton {
     padding: 8px;
     padding-left: 15px;
     border-radius: 0px 7px 7px 0px;
+}
+
+.my-account.rt-box {
+    margin-left: 10px;
 }
 
 .header {
@@ -480,9 +485,11 @@ footer .footer-box h5 {
 .cable-choose {
     margin-bottom: 20px;
 }
+
 main.pro-detail.container {
     margin-top: 20px;
 }
+
 .cable-choose button {
     border: 2px solid #E1E8EE;
     border-radius: 6px;
@@ -501,6 +508,7 @@ img.single-img {
 li.user-rv {
     list-style: none;
 }
+
 .review-user {
     padding: 10px;
     background: #4e4e4e;

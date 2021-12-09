@@ -9,17 +9,17 @@ const multer = require('multer');
 /////////////////////////////////////////Gets list of items.
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, 'public/img/');
     },
 
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, file.originalname);
     }
 });
 
 var upload = multer({ storage: storage })
-router.get("/additem", async (req, res) => {
+router.get("/additem", async(req, res) => {
     if (req.session.userauth) {
         res.render(`product/productdetails`, { user: req.session.userauth, cart: req.session.cartitem });
     } else {
@@ -28,7 +28,7 @@ router.get("/additem", async (req, res) => {
 })
 
 
-router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
+router.post("/additem", upload.array('uploaded_file'), async(req, res) => {
     if (req.session.userauth) {
 
         try {
@@ -53,7 +53,7 @@ router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
     }
 })
 
-router.get("/myitem", async (req, res) => {
+router.get("/myitem", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id
         let itemData = await items.findUserItem(userId);
@@ -63,14 +63,14 @@ router.get("/myitem", async (req, res) => {
     }
 })
 
-router.post('/search', async (req, res) => {
-    let searchTerm = req.body.searchItem;
-    let itemData = await items.searchItem(searchTerm);
-    res.render(`product/searchitem`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem });
-})
-/////////////////////////////////////////////Gets single item.
+router.post('/search', async(req, res) => {
+        let searchTerm = req.body.searchItem;
+        let itemData = await items.searchItem(searchTerm);
+        res.render(`product/searchitem`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem });
+    })
+    /////////////////////////////////////////////Gets single item.
 
-router.get("/checkout", async (req, res) => {
+router.get("/checkout", async(req, res) => {
     if (req.session.userauth) {
         let id = req.query.id;
         res.render(`product/customerdetails`, { id: id, user: req.session.userauth, cart: req.session.cartitem });
@@ -79,7 +79,7 @@ router.get("/checkout", async (req, res) => {
     }
 })
 
-router.post("/thankyou", async (req, res) => {
+router.post("/thankyou", async(req, res) => {
     if (req.session.userauth) {
         let id = req.body.id;
         let userId = req.session.userauth.user_id
@@ -99,7 +99,7 @@ router.post("/thankyou", async (req, res) => {
 
 })
 
-router.get("/soldItem", async (req, res) => {
+router.get("/soldItem", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id
         let itemData = await items.getSoldItemList(userId);
@@ -109,7 +109,7 @@ router.get("/soldItem", async (req, res) => {
     }
 })
 
-router.get("/purchased", async (req, res) => {
+router.get("/purchased", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id;
         let itemData = await users.showPreviousPurchaseItem(userId);
@@ -121,24 +121,35 @@ router.get("/purchased", async (req, res) => {
     }
 
 })
-router.get("/cart", async (req, res) => {
+router.get("/cart", async(req, res) => {
     if (req.session.userauth) {
-        let id = req.query.id;
+
         let userId = req.session.userauth.user_id
-        // const addtocart = await users.addToCartitem(userId, id)
         const viewCart = await users.showCartItem(userId)
         const cartitem = await items.findaddTocartItem(viewCart)
+        req.session.cartitem = { cartlength: cartitem.length };
         let sum = 0;
         cartitem.forEach((sumprice) => {
             sum = sumprice.itemPrice + sum;
         })
-        res.render(`product/cart`, { user: req.session.userauth, grandTotal: sum, cart: req.session.cartitem, cartitem: cartitem });
+        res.render(`product/cart`, { user: req.session.userauth, cart: req.session.cartitem, grandTotal: sum, cart: req.session.cartitem, cartitem: cartitem });
     } else {
         res.redirect('/login')
     }
 })
 
-router.get("/addreview", async (req, res) => {
+router.get("/addtocart", async(req, res) => {
+    if (req.session.userauth) {
+        let id = req.query.id;
+        let userId = req.session.userauth.user_id
+        const addtocart = await users.addToCartitem(userId, id)
+        res.redirect('/item/cart')
+    } else {
+        res.redirect('/login')
+    }
+})
+
+router.get("/addreview", async(req, res) => {
     if (req.session.userauth) {
         let user_id = req.query.id;
         const getcmt = await comments.getUserComment(user_id);
@@ -148,7 +159,7 @@ router.get("/addreview", async (req, res) => {
     }
 })
 
-router.post("/addreview", async (req, res) => {
+router.post("/addreview", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.body.userid;
         let content = req.body.contetnt;
@@ -160,7 +171,7 @@ router.post("/addreview", async (req, res) => {
     }
 })
 
-router.get("/review", async (req, res) => {
+router.get("/review", async(req, res) => {
     if (req.session.userauth) {
         let id = req.query.id;
         let name = req.query.name;
@@ -176,24 +187,24 @@ router.get("/review", async (req, res) => {
     }
 })
 
-router.get("/wishlist", async (req, res) => {
+router.get("/wishlist", async(req, res) => {
 
     res.render(`product/wishlist`, { user: req.session.userauth });
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async(req, res) => {
 
-})
-////////////////////////////////////////////
-router.post('/:id', async (req, res) => {
+    })
+    ////////////////////////////////////////////
+router.post('/:id', async(req, res) => {
 
-})
-////////////////////////////////////////////Take you to a form.
-router.get('/newPost', async (req, res) => {
+    })
+    ////////////////////////////////////////////Take you to a form.
+router.get('/newPost', async(req, res) => {
 
-})
-///////////////////////////////////////////Post from the form
-router.post('/newPost', async (req, res) => {
+    })
+    ///////////////////////////////////////////Post from the form
+router.post('/newPost', async(req, res) => {
 
 })
 module.exports = router;
