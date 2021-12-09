@@ -8,11 +8,11 @@ const users = data.users;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.get("/login", async(req, res) => {
+router.get("/login", async (req, res) => {
     res.render(`login/login`);
 })
 
-router.post("/login", async(req, res) => {
+router.post("/login", async (req, res) => {
     try {
         let email = req.body.username;
         let accountPassword = req.body.password;
@@ -27,11 +27,11 @@ router.post("/login", async(req, res) => {
 })
 
 
-router.get("/registration", async(req, res) => {
+router.get("/registration", async (req, res) => {
     res.render(`login/registration`);
 })
 
-router.post("/registration", async(req, res) => {
+router.post("/registration", async (req, res) => {
     try {
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
@@ -50,8 +50,10 @@ router.post("/registration", async(req, res) => {
     }
 })
 
-router.get('/logout', async(req, res) => {
-    req.session.destroy();
+router.get('/logout', async (req, res) => {
+    req.session.destroy(function (err) {
+        console.log(err)
+    })
     res.redirect('/');
 });
 

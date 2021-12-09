@@ -1,54 +1,71 @@
-<!DOCTYPE html>
-<html>
+{{> header}}
+<main class="pro-detail container">
+   <!-- Left Column / Headphones Image -->
+   <div class="left-column">
+      {{!-- <div class="col-lg-5"> --}}
+         <!-- Product image -->
+         <a href="javascript: void(0);" class="text-center d-block mb-9 first-img">
+            <img src="{{base_url}}/img/{{itemDatas.photos.[0]}}" class="img-fluid main-img"
+               style="max-width: 500px;margin-bottom: 10px;" alt="Product-img">
+         </a>
 
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>index</title>
-   <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-   <link rel="stylesheet" type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <link rel="stylesheet" type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <script src="{{base_url}}/js/jquery.min.js"></script>
-
-</head>
-
-<body>
-  {{> header}}
-   <main class="pro-detail container">
-      <!-- Left Column / Headphones Image -->
-      <div class="left-column">
-         {{#if itemDatas.photos}}
-         <img data-image="red" class="active" src="{{base_url}}/img/{{itemDatas.photos}}" alt="">
-          {{else}}
-                                <img class="img-1" src="{{base_url}}/img/noImage.jpg">
-                            {{/if}}
-      </div>
-      <!-- Right Column -->
-      <div class="right-column">
-         <!-- Product Description -->
-         <div class="product-description">
-            <label class="seller_name">Seller Name : {{userDatas.firstName}} {{userDatas.lastName}}</label>
-            <br>
-            <span>{{itemDatas.status}}</span>
-            <h1>{{itemDatas.itemName}}</h1>
-            <p>{{itemDatas.itemDescription}}</p>
+         <div class="d-lg-flex d-none justify-content-center">
+            {{#each itemDatas.photos}}
+            <a href="javascript: void(0);">
+               <img src="{{base_url}}/img/{{this}}" class="img-fluid img-thumbnail p-2" style="max-width: 150px;"
+                  alt="Product-img">
+            </a>
+            {{/each}}
          </div>
-         
-         <!-- Product Pricing -->
-         <div class="product-price">
-            <span>{{itemDatas.itemPrice}}$</span>
-            <br>
-            <br>
-            <a href="#" class="cart-btn">Add to cart</a>
-            <a href="/item/checkout?id={{itemDatas._id}}" class="buynow-btn">Buy now</a>
-         </div>
+         {{!--
+      </div> --}}
+      {{!-- {{#if itemDatas.photos}}
+      <img data-image="red" class="active single-img" src="{{base_url}}/img/{{itemDatas.photos.[0]}}" alt="">
+      {{else}}
+      <img class="img-1 single-img" src="{{base_url}}/img/noImage.jpg">
+      {{/if}} --}}
+   </div>
+   <!-- Right Column -->
+   <div class="right-column">
+      <!-- Product Description -->
+      <div class="product-description">
+         <label class="seller_name">Seller Name : <a
+               href="/item/review?id={{userDatas._id}}&name={{userDatas.firstName}}">{{userDatas.firstName}}
+               {{userDatas.lastName}}</a></label>
+         <br>
+         <span>{{itemDatas.status}}</span>
+         <h1>{{itemDatas.itemName}}</h1>
+         <p>{{itemDatas.itemDescription}}</p>
       </div>
-   </main>
-   {{> footer}}
-</body>
+   {{!-- <h5><a href="/item/addwishlist?id={{itemDatas._id}}">Add To Wishlist</a></h5> --}}
+   <h5 class="add-to-wish">Add To Wishlist</h5>
+      <!-- Product Pricing -->
+      <div class="product-price">
+         <span>{{itemDatas.itemPrice}}$</span>
+         <br>
+         <br>
+         <a href="/item/addtocart?id={{itemDatas._id}}" class="cart-btn">Add to cart</a>
+         <a href="/item/checkout?id={{itemDatas._id}}" class="buynow-btn">Buy now</a>
+      </div>
+   </div>
+</main>
 
-</html>
+{{> footer}}
+<script>
+   $('.p-2').click(function(){
+     var src1 = $(this).attr('src')
+     var src2 = $('.main-img').attr('src')
+      $('.main-img').attr('src',src1)
+      $(this).attr(src2)
+   })
+
+   $('.add-to-wish').click(function(){
+      $.ajax({
+         url: `/item/addwishlistajax?id={{itemDatas._id}}`, 
+         method:'get',
+         success: function(result) {
+            $('.wish-url').html(`${result}<i class="fa fa-heart" aria-hidden="true"></i>`)
+            console.log(result)
+            }});
+   })
+</script>

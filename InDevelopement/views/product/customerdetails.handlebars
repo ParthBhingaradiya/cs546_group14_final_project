@@ -1,35 +1,17 @@
-<!DOCTYPE html>
-<html>
+<style>
+   .left-column {
+      text-align: unset;
+   }
 
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>index</title>
-   <link rel="stylesheet" type="text/css" href="{{base_url}}/css/site.css">
-   <link rel="stylesheet" type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <link rel="stylesheet" type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   <script src="{{base_url}}/js/jquery.min.js"></script>
-
-   <style>
-      .left-column {
-         text-align: unset;
-      }
-
-      .buynow-btn {
-         margin-top: 20px;
-      }
-   </style>
-</head>
-
-<body>
-   {{> header}}
-   <main class="pro-detail container">
-      <div class="left-column">
-         <div>
-            <form action="/item/thankyou" method="post">
+   .buynow-btn {
+      margin-top: 20px;
+   }
+</style>
+{{> header}}
+<main class="pro-detail container">
+   <div class="left-column">
+      <div>
+         <form action="/item/thankyou" method="post">
             <!-- Name -->
             <div class="md-form md-outline">
                <label for="form75">Name</label>
@@ -44,7 +26,7 @@
             <!-- phone number -->
             <div class="md-form md-outline">
                <label for="form75">Phone No.</label>
-               <input type="number" name="phone_no" id="form75" class="form-control pr-6" required>
+               <input type="number" name="phone_no" id="form75" class="form-control pr-6 phone_no" required>
             </div>
             <!-- Email -->
             <div class="md-form md-outline">
@@ -59,28 +41,48 @@
             <!-- card number -->
             <div class="md-form md-outline">
                <label for="form77">Card Number</label>
-               <input type="number" name="card_number" id="form77" class="form-control pr-6" required>
+               <input type="number" name="card_number" id="form77" class="form-control pr-6 card_number" required>
             </div>
             <!-- cvv -->
             <div class="md-form md-outline">
                <label for="form77">Cvv</label>
-               <input type="number" name="cvv" id="form77" class="form-control pr-6" required>
+               <input type="number" name="cvv" id="form77" class="form-control pr-6 cvv" required>
             </div>
             <!-- card holder name -->
             <div class="md-form md-outline">
                <label for="form77">Expiry date</label>
                <input type="date" name="expiry_date" id="form77" class="form-control pr-6" required>
             </div>
-            <div class="text-right pb-2">
-               <input type="submit" value="Place Order" class="buynow-btn">
+            <div class="md-form md-outline error" style="display: none;">
+               <label for="form77" class="errormsg">Expiry date</label>
             </div>
-            </form>
-         </div>
+            <div class="text-right pb-2">
+               <input type="submit" value="Place Order" class="buynow-btn checkout">
+            </div>
+         </form>
       </div>
+   </div>
 
-   </main>
+</main>
 
-   {{> footer}}
-</body>
-
-</html>
+{{> footer}}
+<script>
+    $('.checkout').click(function(){
+       if($('.phone_no').val().length != 10){
+          $('.error').css('display','block')
+          $('.errormsg').text('Please enter valid Mobile Number')
+        return false;
+        }
+        else if($('.card_number').val().length != 16){
+            $('.error').css('display','block')
+          $('.errormsg').text('Please enter valid Card Number')
+        return false;
+        }
+        else if($('.cvv').val().length != 3){
+            $('.error').css('display','block')
+          $('.errormsg').text('Please enter valid Cvv Number')
+        return false;
+        }
+        
+    })
+</script>

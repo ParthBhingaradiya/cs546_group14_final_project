@@ -1,0 +1,39 @@
+{{> header}}
+<main class="pro-detail container">
+    <div class="left-column">
+        <div class="about-site">
+            <table>
+                <tr>
+                    <td>Name : </td>
+                    <td>{{userData.firstName}} {{userData.lastName}}</td>
+                </tr>
+                <tr>
+                    <td>Email : </td>
+                    <td>{{userData.email}}</td>
+                </tr>
+                <tr>
+                    <td>Address : </td>
+                    <td>{{userData.address}}</td>
+                </tr>
+                <tr>
+                    <td>City : </td>
+                    <td>{{userData.city}}</td>
+                </tr>
+                <tr>
+                    <td>pincode : </td>
+                    <td>{{userData.pincode}}</td>
+                </tr>
+                <tr>
+                    <td>state : </td>
+                    <td>{{userData.state}}</td>
+                </tr>
+                <tr>
+                    <td>age : </td>
+                    <td>{{userData.age}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+
+{{> footer}}

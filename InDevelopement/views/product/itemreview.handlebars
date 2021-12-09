@@ -1,0 +1,32 @@
+<style>
+    .left-column {
+        text-align: unset;
+    }
+
+    .buynow-btn {
+        margin-top: 20px;
+    }
+</style>
+
+{{> header}}
+<main class="pro-detail container">
+    <div class="left-column">
+        <div>
+            <h3>{{name}} Reviews : </h3>
+            <p>Avrage Rating: {{avgnumber}}</p>
+            <ul>
+                {{#each getcmt}}
+                <li class="user-rv">
+                    <div class="review-user">
+                        <p>{{Content}}</p>
+                        <label>Rating: {{rating}}</label>
+                    </div>
+                </li>
+                {{/each}}
+
+            </ul>
+        </div>
+    </div>
+</main>
+
+{{> footer}}

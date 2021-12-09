@@ -9,6 +9,21 @@
     color: #9DBFAF;
 }
 
+h5.add-to-wish:hover {
+    color: #000;
+}
+
+h5.add-to-wish {
+    width: 33%;
+    background: antiquewhite;
+    padding: 5px;
+    color: #6e6e6e;
+}
+
+h5.add-to-wish {
+    cursor: pointer;
+}
+
 img.user-profile {
     width: 50px;
 }
@@ -51,12 +66,37 @@ img.user-profile {
 button.searchButton {
     position: absolute;
     border: none;
-    margin-left: 200px;
+    margin-left: 215px;
     left: 0;
     background-color: transparent;
     top: 50%;
     transform: translateY(-50%);
     left: 8px;
+}
+
+p.contact {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+ul.card-text li {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.about-site td {
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+.about-site {
+    margin: 10px;
+    line-height: 30px;
+    background: #f5f3f3;
+    padding: 20px;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
 }
 
 button.searchButton {
@@ -67,9 +107,25 @@ button.searchButton {
     border-radius: 0px 7px 7px 0px;
 }
 
+.my-account.rt-box {
+    margin-left: 10px;
+}
+
+.main-img {
+    height: 500px !important;
+}
+
 .header {
     background-color: #00000014;
     padding: 15px 0px;
+}
+
+label.errormsg {
+    padding: 10px;
+    border: 1px solid;
+    margin: 10px;
+    color: red;
+    background: #ffeaea;
 }
 
 .logo {
@@ -457,6 +513,10 @@ footer .footer-box h5 {
     margin-bottom: 20px;
 }
 
+main.pro-detail.container {
+    margin-top: 20px;
+}
+
 .cable-choose button {
     border: 2px solid #E1E8EE;
     border-radius: 6px;
@@ -466,6 +526,23 @@ footer .footer-box h5 {
     background-color: #fff;
     cursor: pointer;
     transition: all .5s;
+}
+
+img.single-img {
+    max-height: 500px;
+}
+
+li.user-rv {
+    list-style: none;
+}
+
+.review-user {
+    padding: 10px;
+    background: #4e4e4e;
+    color: white;
+    border-radius: 10px;
+    width: 50%;
+    margin: 10px;
 }
 
 .cable-choose button:hover,

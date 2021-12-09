@@ -6,24 +6,27 @@
     <div class="container">
         {{#if itemDatas}}
         <div class="head">
-            <h1>Products</h1>
+            <h1>Previous Sold Products</h1>
         </div>
 
         <div class="row">
+
             {{#each itemDatas}}
             <div class="pro-box">
                 <div class="product-grid">
                     <div class="product-image">
-                        <a href="/singleitem/{{_id}}" class="image">
+                        {{!-- <a href="/{{_id}}" class="image"> --}}
                             {{#if photos.length}}
                             <img class="img-1" src="{{base_url}}/img/{{photos.[0]}}">
                             {{else}}
                             <img class="img-1" src="{{base_url}}/img/noImage.jpg">
                             {{/if}}
-                        </a>
+                            {{!-- </a> --}}
+
                     </div>
                     <div class="product-content">
-                        <h3 class="title"><a href="/singleitem/{{_id}}">{{itemName}}</a></h3>
+                        {{!-- <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3> --}}
+                        <h3 class="title"><a href="javascript:void(0);">{{itemName}}</a></h3>
                         <div class="price">${{itemPrice}}</div>
                     </div>
                 </div>
@@ -32,11 +35,13 @@
 
 
 
+
         </div>
         {{else}}
         <h1>No item Available</h1>
         {{/if}}
     </div>
+
 </div>
 
 
