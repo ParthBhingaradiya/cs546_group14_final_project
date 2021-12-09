@@ -2,8 +2,16 @@ const collection = require('../config/mongoCollections');
 const user = collection.users;
 let { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
-const saltRounds = 16;
+const saltRounds = 1; //////////////////////////////Change back to 16 later on
 
+/*
+Error trying to find itemData so could not test the following:
+1. Error checking if the item exist in addCartitem
+2.cannot test showCart item part where if it checks if status is open.
+3. cannot test addpurchase item because it changes item to "sold"
+4. Can't test prev sold or prev purhcase because apppurchase didnt work
+5. add check so i can delete sold item in a wish item
+*/
 //to create a new user
 //sign-up functionality
 async function createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age, cm_password) {
@@ -114,19 +122,32 @@ async function checkUser(email, accountPassword) {
 }
 
 async function getSingleUser(userid) {
+    if (typeof userid !== "string") {
+        throw "Error: The user id given is not a valid user id."
+    }
     parseId = ObjectId(userid);
     const userCollection = await user();
     const found = await userCollection.findOne({ _id: parseId });
+    if (!found) {
+        throw "Error: The user cannot be found."
+    }
     return found
 }
 
 async function addToCartitem(userid, itemid) {
     if (typeof userid != "string") {
-        throw "Error: was not given the right ID for the user"
+        throw "Error: was not given the right ID for the user."
     }
     if (typeof itemid != "string") {
-        throw "Error: was not given the right ID for the item"
+        throw "Error: was not given the right ID for the item."
     }
+    /*try{
+        let p = await itemData.findItem(itemid);
+    }
+    catch(e)
+    {
+        throw "Error: Item does not exist."
+    }*/
     const user1 = await getSingleUser(userid);
     const newlist = user1.cart;
     newlist.push(ObjectId(itemid));
