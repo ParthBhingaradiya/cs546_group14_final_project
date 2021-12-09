@@ -26,11 +26,11 @@
                     </div>
                     <div class="product-content">
                         {{!-- <h3 class="title"><a href="/{{_id}}">{{itemName}}</a></h3> --}}
-                        <h3 class="title"><a href="#">{{itemName}}</a></h3>
+                        <h3 class="title"><a href="javascript:void(0);">{{itemName}}</a></h3>
                         <div class="price">${{itemPrice}}</div>
                     </div>
 
-                    <a href="/item/addreview/?id={{userId}}">Add Review</a>
+                    <a href="/item/addreview/?id={{userId}}&itemid={{_id}}">Add Review</a>
                 </div>
             </div>
             {{/each}}

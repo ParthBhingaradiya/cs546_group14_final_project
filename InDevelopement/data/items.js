@@ -1,8 +1,7 @@
 const { ObjectId } = require("bson");
 const mongoCollections = require("../config/mongoCollections");
 const items = mongoCollections.items;
-const data = require('../data');
-const userData= data.user;
+const users = require("./user");
 //Given item values it will create an item and post it to the 
 /*
 Questions:
@@ -30,18 +29,15 @@ async function createItem(itemName, itemDescription, status, userId, itemPrice, 
     if (typeof userId != "string") {
         throw "Error: userId was not given or different type."
     }
-    try{
-        await userData.getSingleUser(userId);
-    }
-    catch(e)
-    {
+    try {
+        await users.getSingleUser(userId);
+    } catch (e) {
         throw "Error: user does not exist while adding item"
     }
     if (typeof itemPrice != "number") {
         throw "Error: Item price was not goven or different type."
     }
-    if(itemPrice<0)
-    {
+    if (itemPrice < 0) {
         throw "Error: Price for the item cannot be a negative number."
     }
     if (!(Array.isArray(commentId))) {
@@ -179,7 +175,7 @@ async function addCommentToItem(commentId, itemId) {
         "Error: item id could not be converted into object id."
     }
     let commentArray = item["commentIds"];
-    commentArray.push(commentId);
+    commentArray.push(ObjectId(commentId));
     const itemsCollection = await items();
     let obj = {
         itemName: item["itemName"],
@@ -284,12 +280,45 @@ async function findaddTocartItem(itemId) {
             $in: itemId
         }
     }).toArray()
+    let itemList = [];
+    for (const i of findInfo) {
+        if (i["status"] == "Open") {
+            itemList.push(i);
+            i["_id"] = i["_id"].toString();
+        }
+    }
+    if (itemList == null) {
+        throw "No item with that id."
+    } else {
+        return itemList;
+    }
+}
+async function getpurchageItem(itemId) {
+    const itemsCollection = await items();
+    const findInfo = await itemsCollection.find({
+        _id: {
+            $in: itemId
+        }
+    }).toArray()
+
     if (findInfo == null) {
         throw "No item with that id."
     } else {
         return findInfo;
     }
 }
+
+async function checkCmtOrnot(itemid) {
+    const parseId = ObjectId(itemid);
+    const itemCollection = await items();
+    const itemTotalList = await itemCollection.findOne({ _id: parseId });
+    if (itemTotalList == null) {
+        throw "No item with that id."
+    } else {
+        return itemTotalList;
+    }
+}
+
 
 module.exports = {
     createItem,
@@ -301,5 +330,7 @@ module.exports = {
     findUserItem,
     searchItem,
     getSoldItemList,
-    findaddTocartItem
+    findaddTocartItem,
+    getpurchageItem,
+    checkCmtOrnot
 };

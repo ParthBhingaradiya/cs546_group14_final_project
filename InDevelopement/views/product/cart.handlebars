@@ -27,7 +27,6 @@
                         <!-- <td>
                                                                 <input type="number" min="1" value="5" class="form-control" placeholder="Qty" style="width: 90px;">
                                                             </td> -->
-
                         <td>
                             <a href="javascript:void(0);" class="action-icon"> <i class="fa fa-trash"></i></a>
                         </td>
@@ -39,8 +38,14 @@
         </div>
         <div class="col-sm-12">
             <div class="text-sm-end">
-                <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
-                    Checkout </a>
+                {{#if cartitem}}  
+               <a href="/item/checkout" class="btn btn-danger">
+                    Checkout</a>
+                    {{else}}
+                     <a href="/" class="btn btn-danger">
+                    Checkout</a>
+                     
+                    {{/if}}
             </div>
         </div>
     </div>

@@ -75,12 +75,12 @@ async function main() {
         // app.use(authMW)
 
         app.use("/", loginRoute)
-        // app.use("/admin", adminRoute)
-        // app.use("/customer", customerRoute)
-        // app.use("/barber", barberRoute)
-        // app.use('/item', productRoute)
+            // app.use("/admin", adminRoute)
+            // app.use("/customer", customerRoute)
+            // app.use("/barber", barberRoute)
+            // app.use('/item', productRoute)
         configRoutes(app);
-        app.listen(port, async () => {
+        app.listen(port, async() => {
             console.log(`Your server is running on http://localhost:${port}`);
             // let objUser = await UserService.getUserByEmail(userEmail)
             // if (objUser)

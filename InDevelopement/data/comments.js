@@ -38,8 +38,7 @@ async function getComment(commentsId) {
     const commentCollection = await comments();
     try {
         parseId = ObjectId(commentsId);
-    }
-    catch (e) {
+    } catch (e) {
         throw "Error: Confirmation if the id was valid error."
     }
     const findInfo = await commentCollection.findOne({ _id: parseId })
@@ -57,8 +56,25 @@ async function getUserComment(userid) {
     }
     return findInfo;
 }
+
+async function getItemCmt(cmtId) {
+    const commentCollection = await comments();
+    const findInfo = await commentCollection.find({
+        _id: {
+            $in: cmtId
+        }
+    }).toArray()
+
+    if (findInfo == null) {
+        throw "No item with that id."
+    } else {
+        return findInfo;
+    }
+}
+
 module.exports = {
     createComment,
     getComment,
-    getUserComment
+    getUserComment,
+    getItemCmt
 };
