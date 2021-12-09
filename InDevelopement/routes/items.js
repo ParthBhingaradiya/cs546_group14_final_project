@@ -103,7 +103,7 @@ router.get("/soldItem", async(req, res) => {
     if (req.session.userauth) {
         let userId = req.session.userauth.user_id
         let itemData = await items.getSoldItemList(userId);
-        res.render(`userproduct/ownproduct`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem });
+        res.render(`userproduct/previoussold`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem });
     } else {
         res.redirect('/login')
     }
