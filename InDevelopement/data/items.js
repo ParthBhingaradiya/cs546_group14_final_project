@@ -239,14 +239,20 @@ async function searchItem(searchTerm) {
     if (typeof searchTerm != "string") {
         throw "Error: was not given the right ID for the item list"
     }
-
+    let itemList = [];
     const itemsCollection = await items();
-    console.log(searchTerm)
     const findInfo = await itemsCollection.find({ itemName: new RegExp(searchTerm.toLowerCase()) }).toArray()
-    if (findInfo == null) {
+
+    for (const i of findInfo) {
+        if (i["status"] == "Open") {
+            itemList.push(i);
+            i["_id"] = i["_id"].toString();
+        }
+    }
+    if (itemList == null) {
         throw "No item with that id."
     } else {
-        return findInfo;
+        return itemList;
     }
 }
 
