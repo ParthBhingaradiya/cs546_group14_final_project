@@ -128,6 +128,26 @@ async function boughtItem(itemId) {
     }
     return obj;
 
+}
+
+async function boughtMultiItem(itemids) {
+    itemids.map(async (Ids) => {
+        let parseId = ObjectId(Ids.toString());
+        const itemsCollection = await items();
+        const item = await itemsCollection.find({ _id: parseId }).toArray()
+        let obj = {
+            itemName: item[0].itemName,
+            itemDescription: item[0].itemDescription,
+            status: "Sold",
+            userId: item[0].userId,
+            itemPrice: item[0].itemPrice,
+            commentIds: item[0].commentIds,
+            photos: item[0].photos,
+            postDate: item[0].postDate
+        }
+        const updatedInfo = await itemsCollection.updateOne({ _id: parseId }, { $set: obj });
+        return obj;
+    })
 
 }
 //Returns a list of items that have the status open
@@ -258,7 +278,7 @@ async function searchItem(searchTerm) {
     }
     let itemList = [];
     const itemsCollection = await items();
-    const findInfo = await itemsCollection.find({ itemName: new RegExp(searchTerm.toLowerCase()) }).toArray()
+    const findInfo = await itemsCollection.find({ itemName: new RegExp(searchTerm) }).toArray()
 
     for (const i of findInfo) {
         if (i["status"] == "Open") {
@@ -332,5 +352,6 @@ module.exports = {
     getSoldItemList,
     findaddTocartItem,
     getpurchageItem,
-    checkCmtOrnot
+    checkCmtOrnot,
+    boughtMultiItem
 };

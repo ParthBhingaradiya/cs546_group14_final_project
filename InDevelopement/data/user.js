@@ -213,7 +213,6 @@ async function addToWishlistitem(userid, itemid) {
         throw "Error: was not given the right ID for the item"
     }
     const user1 = await getSingleUser(userid);
-    console.log(user1)
     const newlist = user1.wishlist;
     newlist.push(ObjectId(itemid));
     let parseId;
@@ -315,42 +314,42 @@ async function addPurchaseItem(userid, itemid) {
 }
 
 async function addMultiplePurchaseItem(userid, itemid) {
-    itemid.map(async (itemsIds) => {
-        const user1 = await getSingleUser(userid);
-        const newlist = user1.prevPurchase;
+    const user1 = await getSingleUser(userid);
+    let newlist = user1.prevPurchase;
+    itemid.forEach(async (itemsIds) => {
         newlist.push(ObjectId(itemsIds.toString()));
-        let parseId;
-
-        try {
-            parseId = ObjectId(userid);
-        } catch (e) {
-            "Error: item id could not be converted into object id."
-        }
-        const doc = {
-            firstName: user1.firstName,
-            lastName: user1.lastName,
-            email: user1.email,
-            address: user1.address,
-            city: user1.city,
-            pincode: user1.pincode,
-            state: user1.state,
-            accountPassword: user1.accountPassword,
-            age: user1.age,
-            avgRating: user1.avgRating,
-            prevPurchase: newlist,
-            prevSold: user1.prevSold,
-            commentSeller: user1.commentSeller,
-            cart: user1.cart,
-            wishlist: user1.wishlist
-        }
-        const userCollection = await user();
-
-        const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
-        if (updatedInfo.modifiedCount == 0) {
-            throw "Error: Could not update anything."
-        }
-        return "Added";
     })
+    let parseId;
+
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase: newlist,
+        prevSold: user1.prevSold,
+        commentSeller: user1.commentSeller,
+        cart: user1.cart,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added";
 
 }
 //It will return array of item ids of previous puschase item
