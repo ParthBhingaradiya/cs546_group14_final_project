@@ -213,6 +213,7 @@ async function addToWishlistitem(userid, itemid) {
         throw "Error: was not given the right ID for the item"
     }
     const user1 = await getSingleUser(userid);
+    console.log(user1)
     const newlist = user1.wishlist;
     newlist.push(ObjectId(itemid));
     let parseId;
@@ -314,7 +315,7 @@ async function addPurchaseItem(userid, itemid) {
 }
 
 async function addMultiplePurchaseItem(userid, itemid) {
-    itemid.map(async(itemsIds) => {
+    itemid.map(async (itemsIds) => {
         const user1 = await getSingleUser(userid);
         const newlist = user1.prevPurchase;
         newlist.push(ObjectId(itemsIds.toString()));
