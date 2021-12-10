@@ -33,23 +33,13 @@ router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
     if (req.session.userauth) {
         try {
             let itemName = req.body.itemName;
-            console.log('itemName', itemName)
             let description = req.body.description;
-            console.log("description", description)
-
             let status = req.body.status;
-            console.log('status', status)
-
             let itemPrice = Number(req.body.itemPrice);
-            console.log('itemPrice', itemPrice)
-
             let userId = req.session.userauth.user_id;
-            console.log('userId', userId)
-
             let fileName = req.files.map((f_name) => {
                 return f_name.originalname
             })
-            console.log('fileName', fileName)
 
             let commentId = []
             const additem = await items.createItem(itemName, description, status, userId, itemPrice, commentId, fileName)
@@ -102,9 +92,7 @@ router.post("/thankyou", async (req, res) => {
         } else {
             id = await users.showCartItem(userId)
             priviouspurchage = await users.addMultiplePurchaseItem(userId, id);
-            id.map(async (itemIds) => {
-                itemData = await items.boughtItem(itemIds.toString());
-            })
+            itemData = await items.boughtMultiItem(id);
         }
         res.render(`product/thankyou`, { user: req.session.userauth, cart: req.session.cartitem, wishlist: req.session.wishlist });
     } else {
