@@ -45,8 +45,8 @@ router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
             const additem = await items.createItem(itemName, description, status, userId, itemPrice, commentId, fileName)
             res.redirect(`/`);
         } catch (e) {
-            console.log(e);
-            res.redirect(`/item/additem`, { err: e });
+           console.log(e);
+            res.render(`product/productdetails`, { err: e });
         }
     } else {
         res.redirect('/login')

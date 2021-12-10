@@ -46,6 +46,11 @@
             <div class="text-right pb-2">
                <input type="submit" value="Add Item" class="buynow-btn">
             </div>
+            {{#if err}}
+                        <div class="form-group">
+                            <label class="erro-info">{{err}}</label><br>
+                        </div>
+                        {{/if}}
          </form>
       </div>
    </div>
