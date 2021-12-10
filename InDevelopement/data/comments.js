@@ -52,7 +52,7 @@ async function getUserComment(userid) {
     const commentCollection = await comments();
     const findInfo = await commentCollection.find({ userId: userid }).toArray();
     if (findInfo === null) {
-        throw "Error: Can't find the item."
+        return 0;
     }
     return findInfo;
 }
