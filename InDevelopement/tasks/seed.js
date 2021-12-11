@@ -7,6 +7,8 @@ const users = data.users;
 async function main() {
     const db = await dbConnection();
     await db.dropDatabase();
+    ////////DATE FOR CARD COULD GO AFTER
+    ///////TRIED TO ADD MULTIPLE ITEM AND DID NOT SHOW UP IN PREVIOIUSLY PURCHASE
     //////////////////////////////////////////////////////////////////////////Creating users
     let secondUser = await users.createUser("Faraz","Pathan","fpathan@gmail.com","25 Amber Dr.","Fairlawn","07465","New Jersey","portableb",20);
     let firstUser = await users.createUser("Banka", "Akancha", "abanka@stevens.com", "93 Western Avenue", "Jersey City", "07307", "New Jersey", "akanch@12345", 27);
