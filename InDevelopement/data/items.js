@@ -1,6 +1,5 @@
 const { ObjectId } = require("bson");
 const mongoCollections = require("../config/mongoCollections");
-//const userData = require("./user.js");
 const items = mongoCollections.items;
 const users = require("./user");
 //Given item values it will create an item and post it to the 
@@ -12,8 +11,6 @@ Remember:
 1. Trim the inputs.
 */
 async function createItem(itemName, itemDescription, status, userId, itemPrice, commentId, photos) {
-    if (!itemName || !itemDescription || !status || !userId || !itemPrice || !commentId || !photos)
-        throw ("One or more user details are missing. Enter again");
     if (typeof itemName != "string") {
         throw "Error: Item name was not given or wrong type";
     }
@@ -23,15 +20,15 @@ async function createItem(itemName, itemDescription, status, userId, itemPrice, 
     if (typeof status != "string") {
         throw "Error: Status of the item was not given"
     }
-    // if (status !== "Sold" && status !== "Open") {
-    //     throw "Error: Status was not the given options."
-    // }
+    if (status !== "Sold" && status !== "Open") {
+        throw "Error: Status was not the given options."
+    }
     //check using userId
     ////////////////////////////////////////////////////check if userid exists later on
 
-    // if (typeof userId != "string") {
-    //     throw "Error: userId was not given or different type."
-    // }
+    if (typeof userId != "string") {
+        throw "Error: userId was not given or different type."
+    }
     try {
         await users.getSingleUser(userId);
     } catch (e) {
