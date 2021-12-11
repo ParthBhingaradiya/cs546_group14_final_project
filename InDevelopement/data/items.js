@@ -131,6 +131,9 @@ async function boughtItem(itemId) {
 }
 
 async function boughtMultiItem(itemids) {
+    if (Array.isArray(itemids) === false) {
+        throw "Error: That Id is not array"
+    }
     itemids.map(async (Ids) => {
         let parseId = ObjectId(Ids.toString());
         const itemsCollection = await items();
@@ -215,19 +218,6 @@ async function addCommentToItem(commentId, itemId) {
 
 }
 
-//Returns a list of items that are bought (Cart)
-async function getCartItem() {
-    const itemCollection = await items();
-    let itemList = [];
-    const itemTotalList = await itemCollection.find({}).toArray();
-    for (const i of itemTotalList) {
-        if (i["status"] == "Sold") {
-            itemList.push(i);
-            i["_id"] = i["_id"].toString();
-        }
-    }
-    return itemList;
-}
 
 //get privouse sold item
 async function getSoldItemList(userid) {
@@ -346,7 +336,6 @@ module.exports = {
     boughtItem,
     getItemList,
     addCommentToItem,
-    getCartItem,
     findUserItem,
     searchItem,
     getSoldItemList,

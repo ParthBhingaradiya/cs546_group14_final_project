@@ -31,22 +31,6 @@ async function createComment(userId, Content, rating) {
     //////Calls user to add the comment id to the user database
     return obj;
 }
-async function getComment(commentsId) {
-    if (typeof commentsId !== 'string') {
-        throw "Error: Comment Id should be string"
-    }
-    const commentCollection = await comments();
-    try {
-        parseId = ObjectId(commentsId);
-    } catch (e) {
-        throw "Error: Confirmation if the id was valid error."
-    }
-    const findInfo = await commentCollection.findOne({ _id: parseId })
-    if (findInfo === null) {
-        throw "Error: Can't find the item."
-    }
-    return findInfo;
-}
 
 async function getUserComment(userid) {
     const commentCollection = await comments();
@@ -74,7 +58,6 @@ async function getItemCmt(cmtId) {
 
 module.exports = {
     createComment,
-    getComment,
     getUserComment,
     getItemCmt
 };
