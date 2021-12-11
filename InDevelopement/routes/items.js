@@ -177,10 +177,18 @@ router.get("/review", async (req, res) => {
     let name = req.query.name;
     const getcmt = await comments.getUserComment(id);
     let avgrate = 0;
-    getcmt.forEach((datas) => {
-        avgrate = Number(datas.rating) + avgrate;
-    })
-    let avgnumber = Number(avgrate / getcmt.length);
+        let avgnumber;
+        console.log(getcmt);
+        if(getcmt == 0){
+            avgnumber= 0;
+        }
+        else{
+            getcmt.forEach((datas) => {
+
+                avgrate = Number(datas.rating) + avgrate;
+            })
+            avgnumber = Number(avgrate / getcmt.length);
+        }
     res.render(`product/itemreview`, { user: req.session.userauth, getcmt: getcmt, name: name, avgnumber: avgnumber, wishlist: req.session.wishlist });
 })
 
