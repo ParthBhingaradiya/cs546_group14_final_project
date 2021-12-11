@@ -12,6 +12,7 @@ const { MongoClient } = require('mongodb');
 const loginRoute = require('./routes/login.route')
 const productRoute = require('./routes/product')
 const configRoutes = require('./routes');
+const middleware = require('./middleware');
 // const adminRoute = require('./routes/admin.route')
 // const customerRoute = require('./routes/customer.route')
 // const barberRoute = require('./routes/barber.route')
@@ -73,25 +74,18 @@ async function main() {
         app.use(bodyParser.json({ limit: '200mb', extended: true }));
         // app.use(commonMW)
         // app.use(authMW)
+        var log = function (req, res, next) {
+            console.log('[' + new Date().toUTCString() + ']: ' + req.method + ' ' + req.originalUrl)
+            next()
+        }
 
+        app.use(log)
+
+        middleware(app);
         app.use("/", loginRoute)
-        // app.use("/admin", adminRoute)
-        // app.use("/customer", customerRoute)
-        // app.use("/barber", barberRoute)
-        // app.use('/item', productRoute)
         configRoutes(app);
         app.listen(port, async () => {
             console.log(`Your server is running on http://localhost:${port}`);
-            // let objUser = await UserService.getUserByEmail(userEmail)
-            // if (objUser)
-            //     return
-            // const hash = await bcrypt.hash(password, saltRounds);
-
-            // let result = await UserService.addUser({
-            //     userEmail: userEmail,
-            //     password: hash,
-            //     type: "ADMIN"
-            // })
         })
 
     } catch (e) {
