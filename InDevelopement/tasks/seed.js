@@ -1,8 +1,10 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const { boughtItem } = require('../data/items');
+const { addPurchaseItem } = require('../data/user');
 const items = data.items;
 const users = data.users;
+const reviews = data.comments;
 
 async function main() {
     const db = await dbConnection();
@@ -48,6 +50,13 @@ async function main() {
     let item23 = await items.createItem("Blue Sweatshirt", "Blue Sweatshirt that is a large size and cozy.", "Open", seventhid.toString(), 15, [], ["item23part1.jpeg","item23part2.jpeg","item23part3.jpeg"]);
     let item24 = await items.createItem("Black Beanie", "Black beanie that is cozy for the winter.", "Open", secondid.toString(), 3, [], ["item24part1.jpeg","item24part2.jpeg","item24part3.jpeg"]);
     let item25 = await items.createItem("Winter Coat", "Great winter coat for the winter and very stylish.", "Open", fourthid.toString(), 51, [], ["item25part1.jpeg","item25part2.jpeg","item25part3.jpeg"]);
+    let item26 = await items.createItem("Pink Sweatshirt", "Great cozy and pretty for a everyday wear.", "Open", firstid.toString(), 26, [], ["item26part1.jpeg","item26part2.jpeg","item26part3.jpeg"]);
+    let item27 = await items.createItem("Cozy Vest", "A vest that can make any out 10x better.", "Open", secondid.toString(), 14, [], ["item27part1.jpeg","item27part2.jpeg","item27part3.jpeg"]);
+    let item28 = await items.createItem("Superman Shirt", "A superman shirt for true superman ship.", "Open", thirdid.toString(), 21, [], ["item28part1.jpeg","item28part2.jpeg","item28part3.jpeg"]);
+    let item29 = await items.createItem("Brown Trenchcoat", "A classy trenchcoat for a cold and professional look.", "Open", fourthid.toString(), 76, [], ["item29part1.jpeg","item29part2.jpeg","item29part3.jpeg"]);
+    let item30 = await items.createItem("Red Bandana", "Red bandana for an accessary on your to look cool.", "Open", fifthid.toString(), 4, [], ["item30part1.jpeg","item30part2.jpeg","item30part3.jpeg"]);
+    let item31 = await items.createItem("Black Suit", "Great for a upcoming wedding or event and looks sharp.", "Open", sixthid.toString(), 123, [], ["item31part1.jpeg","item31part2.jpeg","item31part3.jpeg"]);
+    let item32 = await items.createItem("Black Panjabi", "South Asian garment that is worn is traditional events.", "Open", seventhid.toString(), 72, [], ["item32part1.jpeg","item32part2.jpeg","item32part3.jpeg"]);
     let item1id = item1._id.toString();
     let item2id = item2._id.toString();
     let item3id = item3._id.toString();
@@ -73,6 +82,48 @@ async function main() {
     let item23id = item23._id.toString();
     let item24id = item24._id.toString();
     let item25id = item25._id.toString();
+    let item26id = item26._id.toString();
+    let item27id = item27._id.toString();
+    let item28id = item28._id.toString();
+    let item29id = item29._id.toString();
+    let item30id = item30._id.toString();
+    let item31id = item31._id.toString();
+    let item32id = item32._id.toString();
+    /*await users.addToCartitem(firstid,item32id);
+    await users.addToCartitem(secondid,item31id);
+    await users.addToCartitem(thirdid,item30id);
+    await users.addToCartitem(fourthid,item29id);
+    await users.addToCartitem(fifthid,item28id);
+    await users.addToCartitem(sixthid,item27id);
+    await users.addToCartitem(seventhid,item26id);*/
+    await users.addPurchaseItem(firstid,item32id)
+    await users.addPurchaseItem(secondid,item31id)
+    await users.addPurchaseItem(thirdid,item30id)
+    await users.addPurchaseItem(fourthid,item29id)
+    await users.addPurchaseItem(fifthid,item28id)
+    await users.addPurchaseItem(sixthid,item27id)
+    await users.addPurchaseItem(seventhid,item26id)
+    await items.boughtItem(item32id);
+    await items.boughtItem(item31id);
+    await items.boughtItem(item30id);
+    await items.boughtItem(item29id);
+    await items.boughtItem(item28id);
+    await items.boughtItem(item27id);
+    await items.boughtItem(item26id);
+    const comment1 = await reviews.createComment(firstid, "Wow great rating and would buy another one.", 4);
+    const comment2 = await reviews.createComment(secondid, "Kinda disappointed and was not given the right information. Could be better.", 2);
+    const comment3 = await reviews.createComment(thirdid, "Was not even given the item at all and owner did nothing to fix it.", 1);
+    const comment4 = await reviews.createComment(fourthid, "Was great quality and came early and was a perfact fit.", 5);
+    const comment5 = await reviews.createComment(fifthid, "Was a great product but shipped 2 weeks late and made me miss the birthday.", 3);
+    const comment6 = await reviews.createComment(sixthid, "Came on time but after a few wash it shrunk and lost its purpose.", 3);
+    const comment7 = await reviews.createComment(seventhid, "Great product and gave it to my girlfriend and she loved it. She wears it all the time.", 5);
+    const addcmtonItem1 = await items.addCommentToItem(comment1._id.toString(), item32id);
+    const addcmtonItem2 = await items.addCommentToItem(comment2._id.toString(), item31id);
+    const addcmtonItem3 = await items.addCommentToItem(comment3._id.toString(), item30id);
+    const addcmtonItem4 = await items.addCommentToItem(comment4._id.toString(), item29id);
+    const addcmtonItem5 = await items.addCommentToItem(comment5._id.toString(), item28id);
+    const addcmtonItem6 = await items.addCommentToItem(comment6._id.toString(), item27id);
+    const addcmtonItem7 = await items.addCommentToItem(comment7._id.toString(), item26id);
     /////////////////////////////////////////////////////////testing items
     /*let foundItem = await items.findItem(item1id);
     try{
