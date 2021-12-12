@@ -79,10 +79,8 @@ router.post("/thankyou", async(req, res) => {
     } else {
         id = await users.showCartItem(userId)
         itemData = await items.findMultipleItem(id);
-        itemData.map(async(item_data) => {
-            await users.addMultipleSoldItem(item_data.userId, item_data._id);
-        })
-        priviouspurchage = await users.addMultiplePurchaseItem(userId, id);
+        const soldItem = await users.addMultipleSoldItem(itemData);
+        const priviouspurchage = await users.addMultiplePurchaseItem(req.session.userauth.user_id, id);
         itemData = await items.boughtMultiItem(id);
         id.map(async(i_id) => {
             const removeCartItem = await users.removeToCartItem(userId, i_id.toString())
