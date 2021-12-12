@@ -168,7 +168,7 @@ router.post("/addreview", async (req, res) => {
     let content = req.body.contetnt;
     let rating = req.body.rating;
     const addcmt = await comments.createComment(userId, content, rating);
-    const addcmtonItem = items.addCommentToItem(addcmt._id.toString(), itemId)
+    const addcmtonItem = await items.addCommentToItem(addcmt._id.toString(), itemId)
     res.redirect('/item/purchased')
 })
 
