@@ -283,7 +283,7 @@ async function searchItem(searchTerm) {
     }
     let itemList = [];
     const itemsCollection = await items();
-    const findInfo = await itemsCollection.find({ itemName: new RegExp(searchTerm) }).toArray()
+    const findInfo = await itemsCollection.find({ itemName: new RegExp(searchTerm, 'i') }).toArray()
 
     for (const i of findInfo) {
         if (i["status"] == "Open") {
