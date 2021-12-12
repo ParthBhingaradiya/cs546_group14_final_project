@@ -10,13 +10,13 @@ async function main() {
     const db = await dbConnection();
     await db.dropDatabase();
     //////////////////////////////////////////////////////////////////////////Creating users
-    let secondUser = await users.createUser("Faraz","Pathan","fpathan@gmail.com","25 Amber Dr.","Fairlawn","07465","New Jersey","portableb",20,"portableb");
-    let firstUser = await users.createUser("Banka", "Akancha", "abanka@stevens.com", "93 Western Avenue", "Jersey City", "07307", "New Jersey", "akanch@12345", 27,"akanch@12345");
-    let thirdUser = await users.createUser("Nabid","Kabir","nkabir@gmail.com","87 Florham Ave","Paterson","05943","New Jersey","vjrefdvjfn",35,"vjrefdvjfn" )
-    let fourthUser = await users.createUser("Romy","Swardin","Swardin@gmail.com","76 Lorty Park","Kooperville","75432","Delaware","hfvnfhsdcnfv",48,"hfvnfhsdcnfv" )
-    let fifthUser = await users.createUser("Alvi","Jami","ajami22@gmail.com","345 East Ave","Los Angeles","98342","California","fhvbhsdfcn",16,"fhvbhsdfcn" )
-    let sixthUser = await users.createUser("Ajman","Aha","ajman08@gmail.com","345 Park Place","Edison","98342","Texas","hvghfbcnd34",23 ,"hvghfbcnd34")
-    let seventhUser = await users.createUser("Chance","Assia","chanceassia@gmail.com","38 Chamberline Dr.","Seaside","56435","Florida","vnfdchfd",30,"vnfdchfd" )
+    let secondUser = await users.createUser("Faraz","Pathan","fpathan@gmail.com","25 Amber Dr.","Fairlawn","07465","New Jersey","password123",20,"password123");
+    let firstUser = await users.createUser("Banka", "Akancha", "abanka@stevens.com", "93 Western Avenue", "Jersey City", "07307", "New Jersey", "password123", 27,"password123");
+    let thirdUser = await users.createUser("Parth","Bhingaradiya","pbhingaradiya@gmail.com","87 Florham Ave","Paterson","05943","New Jersey","password123",35,"password123" )
+    let fourthUser = await users.createUser("Hiren","Lodaliya","hlodaliya@gmail.com","76 Lorty Park","Kooperville","75432","Delaware","password123",48,"password123" )
+    let fifthUser = await users.createUser("Malhar","Paghdal","mpaghdal@gmail.com","345 East Ave","Los Angeles","98342","California","password123",16,"password123" )
+    let sixthUser = await users.createUser("Ajman","Aha","ajman08@gmail.com","345 Park Place","Edison","98342","Texas","password123",23 ,"password123")
+    let seventhUser = await users.createUser("Chance","Assia","chanceassia@gmail.com","38 Chamberline Dr.","Seaside","56435","Florida","password123",30,"password123" )
     let firstid = firstUser._id.toString();
     let secondid = secondUser._id.toString();
     let thirdid = thirdUser._id.toString();
