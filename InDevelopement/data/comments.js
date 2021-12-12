@@ -56,8 +56,19 @@ async function getItemCmt(cmtId) {
     }
 }
 
+//getting comment given the comment Id
+async function getComment(commentId){
+    const commentCollection=await comments();
+    const findComment=await commentCollection.findOne({ CommentId: commentId});
+    if(findComment== null)
+        return 0;
+    else
+        return findComment;
+}
+
 module.exports = {
     createComment,
     getUserComment,
-    getItemCmt
+    getItemCmt,
+    getComment
 };
