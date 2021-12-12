@@ -44,7 +44,7 @@ router.post("/registration", async(req, res) => {
         let cm_password = req.body.cmpassword;
         let age = Number(req.body.age);
         await users.createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age, cm_password);
-        res.redirect(`/`);
+        res.redirect(`/login`);
     } catch (e) {
         console.log(e, 'test');
         res.render(`login/registration`, { err: e });
