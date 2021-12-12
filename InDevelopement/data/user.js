@@ -44,7 +44,7 @@ async function createUser(firstName, lastName, email, address, city, pincode, st
 
     if (accountPassword.length < 6)
         throw ("password should be at-least 6 characters long");
-    if (cm_password != accountPassword) throw ("password should be not match");
+    if (cm_password != accountPassword) throw ("password should be match");
     if (!accountPassword.trim().length || accountPassword.trim().length < accountPassword.length)
         throw ("password should not contain empty spaces");
 

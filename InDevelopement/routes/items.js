@@ -50,11 +50,7 @@ router.get("/myitem", async (req, res) => {
     res.render(`userproduct/ownproduct`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
 })
 
-router.post('/search', async (req, res) => {
-    let searchTerm = req.body.searchItem;
-    let itemData = await items.searchItem(searchTerm);
-    res.render(`product/searchitem`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
-})
+
 /////////////////////////////////////////////Gets single item.
 
 router.get("/checkout", async (req, res) => {

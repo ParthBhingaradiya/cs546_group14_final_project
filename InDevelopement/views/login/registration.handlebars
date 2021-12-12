@@ -9,26 +9,26 @@
 
                         <div class="form-group">
                             <label class="text-info">First name:</label><br>
-                            <input type="text" name="firstName" class="form-control" required>
+                            <input type="text" name="firstName" class="form-control fname" required>
                         </div>
                         <div class="form-group">
                             <label class="text-info">Last name:</label><br>
-                            <input type="text" name="lastName" class="form-control" required>
+                            <input type="text" name="lastName" class="form-control lname" required>
                         </div>
                         <div class="form-group">
                             <label class="text-info">Email:</label><br>
-                            <input type="email" name="username" class="form-control" required>
+                            <input type="email" name="username" class="form-control email" required>
                         </div>
 
                         <div class="form-group">
                             <label class="text-info">Address:</label><br>
-                            <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3"
+                            <textarea class="form-control address" name="address" id="exampleFormControlTextarea1" rows="3"
                                 required></textarea>
                         </div>
 
                         <div class="form-group">
                             <label class="text-info">City:</label><br>
-                            <input type="text" name="city" class="form-control" required>
+                            <input type="text" name="city" class="form-control city" required>
                         </div>
 
                         <div class="form-group">
@@ -38,15 +38,15 @@
 
                         <div class="form-group">
                             <label class="text-info">State:</label><br>
-                            <input type="text" name="state" class="form-control">
+                            <input type="text" name="state" class="form-control state">
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-info">Password:</label><br>
-                            <input type="password" name="password" class="form-control" required>
+                            <input type="password" name="password" class="form-control password" required>
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-info">Confirm Password:</label><br>
-                            <input type="password" name="cmpassword" class="form-control" required>
+                            <input type="password" name="cmpassword" class="form-control cpassword" required>
                         </div>
 
                         <div class="form-group">
@@ -58,11 +58,14 @@
                             <label class="erro-info">{{err}}</label><br>
                         </div>
                         {{/if}}
+                        <div class="form-group error-re" style="display:none">
+                            <label class="erro-info lbel-error"></label><br>
+                        </div>
 
 
 
                         <div class="form-group" style="display: flex;justify-content: center;">
-                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            <input type="submit" name="submit" class="btn btn-info btn-md submit-btn" value="submit">
                         </div>
                     </form>
                 </div>
@@ -70,3 +73,64 @@
         </div>
     </div>
 </div>
+<script>
+
+    $(document).ready(function(){
+        $('.submit-btn').click(function(){
+            var fname = $('.fname').val().trim().length
+            var lname = $('.lname').val().trim().length
+            var address = $('.address').val().trim().length
+            var city = $('.city').val().trim().length
+            var state = $('.state').val().trim().length
+            var password = $('.password').val().trim().length
+            var cpassword = $('.cpassword').val().trim().length
+            if(fname == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid First Name')
+                return false
+            }
+            else if(lname == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid Last Name')
+                return false
+            }else if(address == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid address')
+                return false
+            }else if(city == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid city name')
+                return false
+            }else if(state == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid state name')
+                return false
+            }else if(password == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid password')
+                return false
+            }else if(cpassword == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('please Enter valid confirm password')
+                return false
+            }
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('.email').val())) {
+            return (true)
+        } else {
+            $('.error-re').css('display','block')
+                    $('.lbel-error').text('please Enter valid Email address')
+                    return false
+        }
+
+        if (/^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{6,16}$/.test($('.password').val())) {
+            return (true)
+        } else {
+            $('.error-re').css('display','block')
+                    $('.lbel-error').text('Password should contain at least 1 number and 1 special character')
+                    return false
+        }
+        
+
+        })
+    })
+</script>

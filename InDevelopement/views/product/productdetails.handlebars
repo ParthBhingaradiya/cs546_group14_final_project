@@ -16,12 +16,12 @@
             <!-- Name -->
             <div class="md-form md-outline">
                <label for="form75">ItemName</label>
-               <input type="text" name="itemName" id="form75" class="form-control pr-6">
+               <input type="text" name="itemName" id="form75" class="form-control pr-6 itemName">
             </div>
             <!-- address -->
             <div class="md-form md-outline">
                <label for="form75">Description</label>
-               <input type="text" name="description" id="form75" class="form-control pr-6">
+               <input type="text" name="description" id="form75" class="form-control pr-6 description">
             </div>
             <!-- phone number -->
             <div class="md-form md-outline">
@@ -42,6 +42,10 @@
                <label for="form77">Choose Photos</label>
                <input type="file" id="uploaded_file" name="uploaded_file" class="form-control pr-6" multiple />
             </div>
+            <br>
+             <div class="form-group error-re" style="display:none">
+                            <label class="erro-info lbel-error"></label><br>
+                        </div>
 
             <div class="text-right pb-2">
                <input type="submit" value="Add Item" class="buynow-btn">
@@ -59,3 +63,23 @@
 
 
 {{> footer}}
+<script>
+
+    $(document).ready(function(){
+        $('.buynow-btn').click(function(){
+            var itemName = $('.itemName').val().trim().length
+            var description = $('.description').val().trim().length
+            
+            if(itemName == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('Item name can not be blank')
+                return false
+            }else if(description == 0){
+                $('.error-re').css('display','block')
+                $('.lbel-error').text('Item description can not be blank')
+                return false
+            }
+       
+        })
+    })
+</script>

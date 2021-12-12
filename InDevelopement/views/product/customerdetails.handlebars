@@ -15,13 +15,13 @@
             <!-- Name -->
             <div class="md-form md-outline">
                <label for="form75">Name</label>
-               <input type="text" id="form75" name="name" class="form-control pr-6" required>
+               <input type="text" id="form75" name="name" class="form-control pr-6 name" required>
                <input type="hidden" id="form75" name="id" value="{{id}}" class="form-control pr-6">
             </div>
             <!-- address -->
             <div class="md-form md-outline">
                <label for="form75">Address</label>
-               <input type="text" name="address" id="form75" class="form-control pr-6" required>
+               <input type="text" name="address" id="form75" class="form-control pr-6 address" required>
             </div>
             <!-- phone number -->
             <div class="md-form md-outline">
@@ -36,7 +36,7 @@
             <!-- card holder name -->
             <div class="md-form md-outline">
                <label for="form77">Card Holder Name</label>
-               <input type="text" name="card_name" id="form77" class="form-control pr-6" required>
+               <input type="text" name="card_name" id="form77" class="form-control pr-6 card_name" required>
             </div>
             <!-- card number -->
             <div class="md-form md-outline">
@@ -51,10 +51,10 @@
             <!-- card holder name -->
             <div class="md-form md-outline">
                <label for="form77">Expiry date</label>
-               <input type="date" name="expiry_date" id="form77" class="form-control pr-6" required>
+               <input type="date" name="expiry_date" id="form77" class="form-control pr-6 ex_dates" required>
             </div>
             <div class="md-form md-outline error" style="display: none;">
-               <label for="form77" class="errormsg">Expiry date</label>
+               <label for="form77" class="errormsg" >Expiry date</label>
             </div>
             <div class="text-right pb-2">
                <input type="submit" value="Place Order" class="buynow-btn checkout">
@@ -68,19 +68,33 @@
 {{> footer}}
 <script>
    $('.checkout').click(function () {
-      if ($('.phone_no').val().length != 10) {
+      var name = $('.name').val().trim().length
+var address = $('.address').val().trim().length;
+var card_name = $('.card_name').val().trim().length;
+        if (name == 0) {
          $('.error').css('display', 'block')
-         $('.errormsg').text('Please enter valid Mobile Number')
+         $('.errormsg').text('Name can not be blank')
+         return false;
+      }else if (address == 0) {
+         $('.error').css('display', 'block')
+         $('.errormsg').text('Address can not be blank')
          return false;
       }
-      else if ($('.card_number').val().length != 16) {
+      else if ($('.phone_no').val().length != 10 || $('.phone_no').val()  == 0000000000) {
          $('.error').css('display', 'block')
-         $('.errormsg').text('Please enter valid Card Number')
+         $('.errormsg').text('Please enter valid Mobile Number or it can not be all zeros')
          return false;
-      }
-      else if ($('.cvv').val().length != 3) {
+      }else if (card_name == 0) {
          $('.error').css('display', 'block')
-         $('.errormsg').text('Please enter valid Cvv Number')
+         $('.errormsg').text('Card holder Name can not be blank')
+         return false;
+      }else if ($('.card_number').val().length != 16 || $('.card_number').val() == 0000000000000000) {
+         $('.error').css('display', 'block')
+         $('.errormsg').text('Please enter valid Card Number or it can not be all zeros')
+         return false;
+      }else if ($('.cvv').val().length != 3 || $('.cvv').val() == 000) {
+         $('.error').css('display', 'block')
+         $('.errormsg').text('Please enter valid Cvv Number or it can not be all zeros')
          return false;
       }
 
@@ -91,6 +105,20 @@
          $('.errormsg').text('Please enter valid Email')
          return false;
       }
+      
 
    })
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+   
+    $('.ex_dates').attr('min', maxDate);
 </script>
