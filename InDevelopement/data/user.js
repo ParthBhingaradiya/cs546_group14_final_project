@@ -3,6 +3,8 @@ const user = collection.users;
 let { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const saltRounds = 1; //////////////////////////////Change back to 16 later on
+const itemsData=require("./items");
+const commentsData=require("./comments");
 
 /*
 Error trying to find itemData so could not test the following:
@@ -563,6 +565,89 @@ async function removeToCartItem(userid, itemid) {
     return "Added";
 }
 
+async function updateCommentSeller(userid){
+    //list of prev Sold items
+    const user1=await getSingleUser(userid);
+    const prevSold=await showPreviousSoldItem(userid);
+    //check if previously sold items have any received any comments
+    if(prevSold.length==0)
+        return("No items sold yet to receive any comments");
+    let newList = user1.commentSeller;
+    //iterate through prevSold list of user2
+    for (const element of prevSold) {
+        //get individual items from prev Sold list
+        let thisItem = await itemsData.findItem(element);
+        //check if thisitem has received any comment
+        if (thisItem.commentIds != null) {
+            let comments = thisItem.commentIds;
+            //iterate through the comments of thisItem
+            comments.forEach((cmts) => {
+                newList.push(cmts.CommentId);//push the comments to newList
+            });
+        }
+    }
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id."
+    }
+    const doc = {
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        email: user1.email,
+        address: user1.address,
+        city: user1.city,
+        pincode: user1.pincode,
+        state: user1.state,
+        accountPassword: user1.accountPassword,
+        age: user1.age,
+        avgRating: user1.avgRating,
+        prevPurchase: user1.prevPurchase,
+        prevSold: user1.prevSold,
+        commentSeller: newlist,
+        cart: user1.cart,
+        wishlist: user1.wishlist
+    }
+    const userCollection = await user();
+    const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+    if (updatedInfo.modifiedCount == 0) {
+        throw "Error: Could not update anything."
+    }
+    return "Added commentSeller";
+}
+
+//updating avg rating of the user
+//iterate through commentSeller and update avg ratings
+// on the basis of rating of the comments received till now
+async function updateAvgRating(userid){
+    const user1=await getSingleUser(userid);
+    const comments= user1.commentSeller;
+    if(comments.length==0)
+        return("no comments received by this user yet");
+    let totalRating=0;
+    for (const cmtid of comments) {
+        //retrieving comment
+        const thiscomment = await commentsData.getComment(cmtid);
+        totalRating= totalRating+ thiscomment.rating;
+    }
+    //calculating totalRating
+    totalRating= Math.round(totalRating/comments.length);
+    //updating avg rating of user with this total rating
+    let parseId;
+    try {
+        parseId = ObjectId(userid);
+    } catch (e) {
+        "Error: item id could not be converted into object id.";
+    }
+    const userCollection = await user();
+    const updatedAvgRating= await userCollection.updateOne({_id: parseId},{$set :{avgRating:totalRating}});
+    if (updatedAvgRating.modifiedCount==0){
+        throw "Error: Could not update anything.";
+    }
+    return "updated average rating";
+}
+
 module.exports = {
     createUser,
     checkUser,
@@ -579,5 +664,7 @@ module.exports = {
     removeToCartItem,
     addMultipleSoldItem,
     addSoldItem,
-    showPreviousSoldItem
+    showPreviousSoldItem,
+    updateCommentSeller,
+    updateAvgRating
 };
