@@ -93,6 +93,23 @@ async function findItem(itemId) {
         return findInfo;
     }
 }
+
+async function findMultipleItem(itemId) {
+    if (Array.isArray(itemId) === false) {
+        throw "Error: was not given the right ID for the item list"
+    }
+    const itemsCollection = await items();
+    const findInfo = await itemsCollection.find({
+        _id: {
+            $in: itemId
+        }
+    }).toArray()
+    if (findInfo == null) {
+        throw "No item with that id."
+    } else {
+        return findInfo;
+    }
+}
 ///changes the status of them item being open to sold. 
 ////Go to office hours to check with this
 async function boughtItem(itemId) {
@@ -134,7 +151,7 @@ async function boughtMultiItem(itemids) {
     if (Array.isArray(itemids) === false) {
         throw "Error: That Id is not array"
     }
-    itemids.map(async (Ids) => {
+    itemids.map(async(Ids) => {
         let parseId = ObjectId(Ids.toString());
         const itemsCollection = await items();
         const item = await itemsCollection.find({ _id: parseId }).toArray()
@@ -229,8 +246,6 @@ async function getSoldItemList(userid) {
             itemList.push(i);
             i["_id"] = i["_id"].toString();
         }
-
-
     }
 
     return itemList;
@@ -303,6 +318,22 @@ async function findaddTocartItem(itemId) {
         return itemList;
     }
 }
+
+async function findPreviousSoldItem(itemId) {
+    const itemsCollection = await items();
+    const findInfo = await itemsCollection.find({
+        _id: {
+            $in: itemId
+        }
+    }).toArray()
+
+    if (findInfo == null) {
+        throw "No item with that id."
+    } else {
+        return findInfo;
+    }
+}
+
 async function getpurchageItem(itemId) {
     const itemsCollection = await items();
     const findInfo = await itemsCollection.find({
@@ -342,5 +373,7 @@ module.exports = {
     findaddTocartItem,
     getpurchageItem,
     checkCmtOrnot,
-    boughtMultiItem
+    boughtMultiItem,
+    findPreviousSoldItem,
+    findMultipleItem
 };
