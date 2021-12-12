@@ -9,22 +9,22 @@ const multer = require('multer');
 /////////////////////////////////////////Gets list of items.
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, 'public/img/');
     },
 
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, file.originalname);
     }
 });
 
 var upload = multer({ storage: storage })
-router.get("/additem", async (req, res) => {
+router.get("/additem", async(req, res) => {
     res.render(`product/productdetails`, { user: req.session.userauth, wishlist: req.session.wishlist, cart: req.session.cartitem });
 })
 
 
-router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
+router.post("/additem", upload.array('uploaded_file'), async(req, res) => {
     try {
         let itemName = req.body.itemName;
         let description = req.body.description;
@@ -44,7 +44,7 @@ router.post("/additem", upload.array('uploaded_file'), async (req, res) => {
     }
 })
 
-router.get("/myitem", async (req, res) => {
+router.get("/myitem", async(req, res) => {
     let userId = req.session.userauth.user_id
     let itemData = await items.findUserItem(userId);
     res.render(`userproduct/ownproduct`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
@@ -53,36 +53,54 @@ router.get("/myitem", async (req, res) => {
 
 /////////////////////////////////////////////Gets single item.
 
-router.get("/checkout", async (req, res) => {
+router.get("/checkout", async(req, res) => {
     let id = req.query.id;
-    res.render(`product/customerdetails`, { id: id, user: req.session.userauth, cart: req.session.cartitem, wishlist: req.session.wishlist });
+    let userid = req.query.user_id;
+    res.render(`product/customerdetails`, { userid: userid, id: id, user: req.session.userauth, cart: req.session.cartitem, wishlist: req.session.wishlist });
 })
 
-router.post("/thankyou", async (req, res) => {
+router.post("/thankyou", async(req, res) => {
 
     let userId = req.session.userauth.user_id
     let id = '';
     let priviouspurchage, itemData;
     if (req.body.id) {
         id = req.body.id;
+        productUser_id = req.body.user_id;
         priviouspurchage = await users.addPurchaseItem(userId, id);
+        await users.addSoldItem(productUser_id, id);
         itemData = await items.boughtItem(id);
+        const viewCart = await users.showCartItem(userId)
+        if (viewCart.length != 0) {
+            const removeCartItem = await users.removeToCartItem(userId, id)
+            cartitem = await items.findaddTocartItem(viewCart)
+            req.session.cartitem = { cartlength: cartitem.length };
+        }
     } else {
         id = await users.showCartItem(userId)
+        itemData = await items.findMultipleItem(id);
+        itemData.map(async(item_data) => {
+            await users.addMultipleSoldItem(item_data.userId, item_data._id);
+        })
         priviouspurchage = await users.addMultiplePurchaseItem(userId, id);
         itemData = await items.boughtMultiItem(id);
+        id.map(async(i_id) => {
+            const removeCartItem = await users.removeToCartItem(userId, i_id.toString())
+        })
+        req.session.cartitem = { cartlength: 0 };
     }
     res.render(`product/thankyou`, { user: req.session.userauth, cart: req.session.cartitem, wishlist: req.session.wishlist });
 
 })
 
-router.get("/soldItem", async (req, res) => {
+router.get("/soldItem", async(req, res) => {
     let userId = req.session.userauth.user_id
-    let itemData = await items.getSoldItemList(userId);
+    const viewItemSold = await users.showPreviousSoldItem(userId)
+    let itemData = await items.findPreviousSoldItem(viewItemSold);
     res.render(`userproduct/previoussold`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
 })
 
-router.get("/purchased", async (req, res) => {
+router.get("/purchased", async(req, res) => {
     let userId = req.session.userauth.user_id;
     let itemData = await users.showPreviousPurchaseItem(userId);
     const itemDatas = await items.getpurchageItem(itemData)
@@ -90,7 +108,7 @@ router.get("/purchased", async (req, res) => {
     res.render(`userproduct/previouslypurchased`, { user: req.session.userauth, itemDatas: itemDatas, cart: req.session.cartitem, getcmt: getcmt, wishlist: req.session.wishlist });
 
 })
-router.get("/cart", async (req, res) => {
+router.get("/cart", async(req, res) => {
     let userId = req.session.userauth.user_id
     const viewCart = await users.showCartItem(userId)
     let sum = 0;
@@ -111,7 +129,7 @@ router.get("/cart", async (req, res) => {
 })
 
 
-router.get("/addtocart", async (req, res) => {
+router.get("/addtocart", async(req, res) => {
     let id = req.query.id;
     let userId = req.session.userauth.user_id
     const removewishitem = await users.removeToWishlistitem(userId, id)
@@ -119,7 +137,7 @@ router.get("/addtocart", async (req, res) => {
     res.redirect('/item/cart')
 })
 
-router.get("/wishlist", async (req, res) => {
+router.get("/wishlist", async(req, res) => {
     let userId = req.session.userauth.user_id
     let viewCart = await users.showWishlistItem(userId)
     if (viewCart == null) {
@@ -130,7 +148,7 @@ router.get("/wishlist", async (req, res) => {
     res.render(`product/wishlist`, { user: req.session.userauth, cart: req.session.cartitem, wishlistitem: wishlistitem, wishlist: req.session.wishlist });
 })
 
-router.get("/addwishlist", async (req, res) => {
+router.get("/addwishlist", async(req, res) => {
     let id = req.query.id;
     let userId = req.session.userauth.user_id
     const addtocart = await users.addToWishlistitem(userId, id)
@@ -138,7 +156,7 @@ router.get("/addwishlist", async (req, res) => {
 })
 
 
-router.get("/addwishlistajax", async (req, res) => {
+router.get("/addwishlistajax", async(req, res) => {
     let id = req.query.id;
     let userId = req.session.userauth.user_id
     const addtocart = await users.addToWishlistitem(userId, id)
@@ -150,7 +168,7 @@ router.get("/addwishlistajax", async (req, res) => {
     res.json(wishlistitem.length);
 })
 
-router.get("/addreview", async (req, res) => {
+router.get("/addreview", async(req, res) => {
     let user_id = req.query.id;
     let item_id = req.query.itemid;
     const checkcmt = await items.checkCmtOrnot(item_id);
@@ -158,7 +176,7 @@ router.get("/addreview", async (req, res) => {
     res.render(`product/addreview`, { user: req.session.userauth, userid: user_id, item_id: item_id, getcmt: getcmt.length, wishlist: req.session.wishlist });
 })
 
-router.post("/addreview", async (req, res) => {
+router.post("/addreview", async(req, res) => {
     let userId = req.body.userid;
     let itemId = req.body.itemid;
     let content = req.body.contetnt;
@@ -168,34 +186,33 @@ router.post("/addreview", async (req, res) => {
     res.redirect('/item/purchased')
 })
 
-router.get("/review", async (req, res) => {
+router.get("/review", async(req, res) => {
     let id = req.query.id;
     let name = req.query.name;
     const getcmt = await comments.getUserComment(id);
     let avgrate = 0;
-        let avgnumber;
-        console.log(getcmt);
-        if(getcmt == 0){
-            avgnumber= 0;
-        }
-        else{
-            getcmt.forEach((datas) => {
+    let avgnumber;
+    console.log(getcmt);
+    if (getcmt == 0) {
+        avgnumber = 0;
+    } else {
+        getcmt.forEach((datas) => {
 
-                avgrate = Number(datas.rating) + avgrate;
-            })
-            avgnumber = Number(avgrate / getcmt.length);
-        }
+            avgrate = Number(datas.rating) + avgrate;
+        })
+        avgnumber = Number(avgrate / getcmt.length);
+    }
     res.render(`product/itemreview`, { user: req.session.userauth, getcmt: getcmt, name: name, avgnumber: avgnumber, wishlist: req.session.wishlist });
 })
 
-router.get("/removewishlist", async (req, res) => {
+router.get("/removewishlist", async(req, res) => {
     let id = req.query.id;
     let userId = req.session.userauth.user_id
     const removewishItem = await users.removeToWishlistitem(userId, id)
     res.redirect('/item/wishlist')
 })
 
-router.get("/removecartlist", async (req, res) => {
+router.get("/removecartlist", async(req, res) => {
     let id = req.query.id;
     let userId = req.session.userauth.user_id
     const removewishItem = await users.removeToCartItem(userId, id)
