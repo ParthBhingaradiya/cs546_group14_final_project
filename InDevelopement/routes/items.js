@@ -50,11 +50,7 @@ router.get("/myitem", async (req, res) => {
     res.render(`userproduct/ownproduct`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
 })
 
-router.post('/search', async (req, res) => {
-    let searchTerm = req.body.searchItem;
-    let itemData = await items.searchItem(searchTerm);
-    res.render(`product/searchitem`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
-})
+
 /////////////////////////////////////////////Gets single item.
 
 router.get("/checkout", async (req, res) => {
@@ -168,7 +164,7 @@ router.post("/addreview", async (req, res) => {
     let content = req.body.contetnt;
     let rating = req.body.rating;
     const addcmt = await comments.createComment(userId, content, rating);
-    const addcmtonItem = items.addCommentToItem(addcmt._id.toString(), itemId)
+    const addcmtonItem = await items.addCommentToItem(addcmt._id.toString(), itemId)
     res.redirect('/item/purchased')
 })
 
@@ -177,10 +173,18 @@ router.get("/review", async (req, res) => {
     let name = req.query.name;
     const getcmt = await comments.getUserComment(id);
     let avgrate = 0;
-    getcmt.forEach((datas) => {
-        avgrate = Number(datas.rating) + avgrate;
-    })
-    let avgnumber = Number(avgrate / getcmt.length);
+        let avgnumber;
+        console.log(getcmt);
+        if(getcmt == 0){
+            avgnumber= 0;
+        }
+        else{
+            getcmt.forEach((datas) => {
+
+                avgrate = Number(datas.rating) + avgrate;
+            })
+            avgnumber = Number(avgrate / getcmt.length);
+        }
     res.render(`product/itemreview`, { user: req.session.userauth, getcmt: getcmt, name: name, avgnumber: avgnumber, wishlist: req.session.wishlist });
 })
 

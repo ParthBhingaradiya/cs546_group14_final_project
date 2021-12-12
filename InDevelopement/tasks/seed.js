@@ -8,13 +8,13 @@ async function main() {
     const db = await dbConnection();
     await db.dropDatabase();
     //////////////////////////////////////////////////////////////////////////Creating users
-    let secondUser = await users.createUser("Faraz","Pathan","fpathan@gmail.com","25 Amber Dr.","Fairlawn","07465","New Jersey","portableb",20);
-    let firstUser = await users.createUser("Banka", "Akancha", "abanka@stevens.com", "93 Western Avenue", "Jersey City", "07307", "New Jersey", "akanch@12345", 27);
-    let thirdUser = await users.createUser("Nabid","Kabir","nkabir@gmail.com","87 Florham Ave","Paterson","05943","New Jersey","vjrefdvjfn",35 )
-    let fourthUser = await users.createUser("Romy","Swardin","Swardin@gmail.com","76 Lorty Park","Kooperville","75432","Delaware","hfvnfhsdcnfv",48 )
-    let fifthUser = await users.createUser("Alvi","Jami","ajami22@gmail.com","345 East Ave","Los Angeles","98342","California","fhvbhsdfcn",16 )
-    let sixthUser = await users.createUser("Ajman","Aha","ajman08@gmail.com","345 Park Place","Edison","98342","Texas","hvghfbcnd34",23 )
-    let seventhUser = await users.createUser("Chance","Assia","chanceassia@gmail.com","38 Chamberline Dr.","Seaside","56435","Florida","vnfdchfd",30 )
+    let secondUser = await users.createUser("Faraz","Pathan","fpathan@gmail.com","25 Amber Dr.","Fairlawn","07465","New Jersey","portableb",20,"portableb");
+    let firstUser = await users.createUser("Banka", "Akancha", "abanka@stevens.com", "93 Western Avenue", "Jersey City", "07307", "New Jersey", "akanch@12345", 27,"akanch@12345");
+    let thirdUser = await users.createUser("Nabid","Kabir","nkabir@gmail.com","87 Florham Ave","Paterson","05943","New Jersey","vjrefdvjfn",35,"vjrefdvjfn" )
+    let fourthUser = await users.createUser("Romy","Swardin","Swardin@gmail.com","76 Lorty Park","Kooperville","75432","Delaware","hfvnfhsdcnfv",48,"hfvnfhsdcnfv" )
+    let fifthUser = await users.createUser("Alvi","Jami","ajami22@gmail.com","345 East Ave","Los Angeles","98342","California","fhvbhsdfcn",16,"fhvbhsdfcn" )
+    let sixthUser = await users.createUser("Ajman","Aha","ajman08@gmail.com","345 Park Place","Edison","98342","Texas","hvghfbcnd34",23 ,"hvghfbcnd34")
+    let seventhUser = await users.createUser("Chance","Assia","chanceassia@gmail.com","38 Chamberline Dr.","Seaside","56435","Florida","vnfdchfd",30,"vnfdchfd" )
     let firstid = firstUser._id.toString();
     let secondid = secondUser._id.toString();
     let thirdid = thirdUser._id.toString();
@@ -74,7 +74,7 @@ async function main() {
     let item24id = item24._id.toString();
     let item25id = item25._id.toString();
     /////////////////////////////////////////////////////////testing items
-    let foundItem = await items.findItem(item1id);
+    /*let foundItem = await items.findItem(item1id);
     try{
         await items.findItem();
     }
@@ -116,8 +116,8 @@ async function main() {
     catch(e){
         console.log("add to cart items with wrong ids work")
     }*/
-    let addCartItem2 = await users.addToCartitem(sixthid,item21id);
-    await items.boughtItem(item21id);
+    //let addCartItem2 = await users.addToCartitem(sixthid,item21id);
+    //await items.boughtItem(item21id);
     //let showCartItem= await users.showCartItem(fifthid);
     //console.log("Hey200000");
     /*let wishItem = await users.addToWishlistitem(secondid,item20id);

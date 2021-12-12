@@ -62,4 +62,10 @@ router.get("/profile", async (req, res) => {
     res.render(`userproduct/profile`, { user: req.session.userauth, cart: req.session.cartitem, userData: userData, wishlist: req.session.wishlist });
 })
 
+router.post('/search', async (req, res) => {
+    let searchTerm = req.body.searchItem;
+    let itemData = await items.searchItem(searchTerm);
+    res.render(`product/searchitem`, { user: req.session.userauth, itemDatas: itemData, cart: req.session.cartitem, wishlist: req.session.wishlist });
+})
+
 module.exports = router;
