@@ -418,19 +418,25 @@ async function addSoldItem(userid, itemid) {
 }
 
 async function addMultipleSoldItem(itemData) {
-    itemData.map(async(itemsDatas) => {
+    let newlist
+    let user1
+    const userCollection = await user();
+    itemData.forEach(async(itemsDatas) => {
 
         let userid = itemsDatas.userId;
-        let  itemid= itemsDatas._id
-        const userCollection = await user();
-        const user1 = await userCollection.find({ _id: ObjectId(userid) }).toArray();
-        let newlist = user1[0].prevSold;
-
+        let itemid = itemsDatas._id
+        user1 = await userCollection.find({ _id: ObjectId(userid) }).toArray();
+        newlist = user1[0].prevSold;
+    })
+    itemData.forEach(async(itemsDatas) => {
+        let userid = itemsDatas.userId;
+        let itemid = itemsDatas._id
+        user1 = await userCollection.find({ _id: ObjectId(userid) }).toArray();
         newlist.push(itemid);
         let parseId;
 
-            parseId = ObjectId(userid);
-       
+        parseId = ObjectId(userid);
+
         const doc = {
             firstName: user1[0].firstName,
             lastName: user1[0].lastName,
@@ -448,9 +454,10 @@ async function addMultipleSoldItem(itemData) {
             cart: user1[0].cart,
             wishlist: user1[0].wishlist
         }
+        console.log(doc)
 
-        const updatedInfo = await userCollection.update({ _id: parseId }, { $set: doc });
-       
+        const updatedInfo = await userCollection.updateOne({ _id: parseId }, { $set: doc });
+
     })
 
 }
