@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const users = data.users;
 const items = data.items;
-const xxs = require('xss');
+
 router.get("/", async (req, res) => {
     let itemData = await items.getItemList();
     if (req.session.userauth) {
@@ -28,27 +28,15 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let firstName = xxs(req.body.firstName);
-        let lastName = xxs(req.body.lastName);
-        let email = xxs(req.body.username);
-        let address = xxs(req.body.address);
-        let city = xxs(req.body.city)
-        let pincode = xxs(req.body.pincode);
-        let state = xxs(req.body.state);
-        let accountPassword = xxs(req.body.password);
-        let age = Number(xxs(req.body.age));
-        if(!firstName||!lastName||!email||!address||!city||!pincode||!state||!accountPassword||!age)
-        {
-            throw "Error: Missing an element"
-        }
-        if(firstName.trim().length<=0||lastName.trim().length<=0||email.trim().length<=0||address.trim().length<=0||city.trim().length<=0||pincode.trim().length<=0||state.trim().length<=0)
-        {
-            throw "Error: input is empty";
-        }
-        if(age<0&&age>140)
-        {
-            throw "Error: Bad age."
-        }
+        let firstName = req.body.firstName;
+        let lastName = req.body.lastName;
+        let email = req.body.username;
+        let address = req.body.address;
+        let city = req.body.city;
+        let pincode = req.body.pincode;
+        let state = req.body.state;
+        let accountPassword = req.body.password;
+        let age = Number(req.body.age);
         await users.createUser(firstName, lastName, email, address, city, pincode, state, accountPassword, age);
         res.render(`product/allproduct`);
     } catch (e) {

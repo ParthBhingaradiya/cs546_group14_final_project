@@ -110,13 +110,6 @@ async function main() {
     await items.boughtItem(item28id);
     await items.boughtItem(item27id);
     await items.boughtItem(item26id);
-    await users.addSoldItem(item32.userId,item32id)
-    await users.addSoldItem(item31.userId,item31id)
-    await users.addSoldItem(item30.userId,item30id)
-    await users.addSoldItem(item29.userId,item29id)
-    await users.addSoldItem(item28.userId,item28id)
-    await users.addSoldItem(item27.userId,item27id)
-    await users.addSoldItem(item26.userId,item26id)
     const comment1 = await reviews.createComment(firstid, "Wow great rating and would buy another one.", 4);
     const comment2 = await reviews.createComment(secondid, "Kinda disappointed and was not given the right information. Could be better.", 2);
     const comment3 = await reviews.createComment(thirdid, "Was not even given the item at all and owner did nothing to fix it.", 1);
