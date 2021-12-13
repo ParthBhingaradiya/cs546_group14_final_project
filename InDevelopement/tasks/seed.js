@@ -5,7 +5,7 @@ const { addPurchaseItem } = require('../data/user');
 const items = data.items;
 const users = data.users;
 const reviews = data.comments;
-
+///Note: Error when runs seed but involves with closing and still adds data
 async function main() {
     const db = await dbConnection();
     await db.dropDatabase();
@@ -131,6 +131,14 @@ async function main() {
     const addcmtonItem5 = await items.addCommentToItem(comment5._id.toString(), item28id);
     const addcmtonItem6 = await items.addCommentToItem(comment6._id.toString(), item27id);
     const addcmtonItem7 = await items.addCommentToItem(comment7._id.toString(), item26id);
+    await users.addToCmt(item32.userId,comment1._id.toString())
+    await users.addToCmt(item31.userId,comment2._id.toString())
+    await users.addToCmt(item30.userId,comment3._id.toString())
+    await users.addToCmt(item29.userId,comment4._id.toString())
+    await users.addToCmt(item28.userId,comment5._id.toString())
+    await users.addToCmt(item27.userId,comment6._id.toString())
+    await users.addToCmt(item26.userId,comment7._id.toString())
+
     /////////////////////////////////////////////////////////testing items
     /*let foundItem = await items.findItem(item1id);
     try{
