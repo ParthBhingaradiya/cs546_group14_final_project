@@ -6,6 +6,7 @@ const users = data.users;
 const comments = data.comments;
 const path = require('path');
 const multer = require('multer');
+const xss = require('xss');
 /////////////////////////////////////////Gets list of items.
 
 const storage = multer.diskStorage({
@@ -26,15 +27,26 @@ router.get("/additem", async(req, res) => {
 
 router.post("/additem", upload.array('uploaded_file'), async(req, res) => {
     try {
-        let itemName = req.body.itemName;
-        let description = req.body.description;
-        let status = req.body.status;
-        let itemPrice = Number(req.body.itemPrice);
-        let userId = req.session.userauth.user_id;
+        let itemName = xss(req.body.itemName);
+        let description = xss(req.body.description);
+        let status = xss(req.body.status);
+        let itemPrice = Number(xss(req.body.itemPrice));
+        let userId = xss(req.session.userauth.user_id);
         let fileName = req.files.map((f_name) => {
-            return f_name.originalname
+            return xss(f_name.originalname)
         })
-
+        if(!itemName||!description||!status||!itemPrice||!userId||!fileName)
+        {
+            throw "Error: was not given all inputs."
+        }
+        if(itemName.trim().length<=0||description.trim().length<=0||status.trim().length<=0)
+        {
+            throw "Error: Was given empty strings"
+        }
+        if(itemPrice<0)
+        {
+            throw "Error: Cannot get a negative price."
+        }
         let commentId = []
         const additem = await items.createItem(itemName, description, status, userId, itemPrice, commentId, fileName)
         res.redirect(`/`);
@@ -62,6 +74,10 @@ router.get("/checkout", async(req, res) => {
 router.post("/thankyou", async(req, res) => {
 
     let userId = req.session.userauth.user_id
+    if(!userId)
+    {
+        throw "Error: No user id";
+    }
     let id = '';
     let priviouspurchage, itemData;
     if (req.body.id) {
@@ -79,8 +95,10 @@ router.post("/thankyou", async(req, res) => {
     } else {
         id = await users.showCartItem(userId)
         itemData = await items.findMultipleItem(id);
-        const soldItem = await users.addMultipleSoldItem(itemData);
-        const priviouspurchage = await users.addMultiplePurchaseItem(req.session.userauth.user_id, id);
+        itemData.map(async(item_data) => {
+            await users.addMultipleSoldItem(item_data.userId, item_data._id);
+        })
+        priviouspurchage = await users.addMultiplePurchaseItem(userId, id);
         itemData = await items.boughtMultiItem(id);
         id.map(async(i_id) => {
             const removeCartItem = await users.removeToCartItem(userId, i_id.toString())
@@ -175,13 +193,32 @@ router.get("/addreview", async(req, res) => {
 })
 
 router.post("/addreview", async(req, res) => {
-    let userId = req.body.userid;
-    let itemId = req.body.itemid;
-    let content = req.body.contetnt;
-    let rating = req.body.rating;
+    try{
+    let userId = xss(req.body.userid);
+    let itemId = xss(req.body.itemid);
+    let content = xss(req.body.contetnt);
+    let rating = xss(req.body.rating);
+    if(!userId||!itemId||!content||!rating)
+    {
+        throw "Error: Something is missing."
+    }
+    if(content.trim().length<=0)
+    {
+       throw "Error: Cannot do the length of content."
+    }
+    if(rating>5&&rating<0)
+    {
+        throw "Error: Rating is impossible."
+    }
     const addcmt = await comments.createComment(userId, content, rating);
     const addcmtonItem = await items.addCommentToItem(addcmt._id.toString(), itemId)
     res.redirect('/item/purchased')
+    }
+    catch(e)
+    {
+        res.send.json(e);
+    }
+
 })
 
 router.get("/review", async(req, res) => {
