@@ -33,7 +33,7 @@ Previously Sold: All the items put by user for sale which have been purchased wi
 
 Payment Processing:
 
-The DropIn UI is displayed to start the payment process, giving users the option credit card. 
+The checkout form is displayed to start the payment process, giving users the option of credit card to make the payment.
 Previously Purchased: The user can view their previous orders.
 
 
